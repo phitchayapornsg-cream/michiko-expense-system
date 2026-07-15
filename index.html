@@ -1,0 +1,369 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Michiko Expense App</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <img class="brand-logo" src="assets/michiko-symbol-red.png" alt="Michiko">
+        <div>
+          <div class="brand-title">ระบบบัญชีค่าใช้จ่าย</div>
+          <div class="brand-sub">Petty cash และใบสำคัญจ่ายสำหรับ Michiko</div>
+        </div>
+      </div>
+      <nav class="nav" aria-label="เมนูหลัก">
+        <button type="button" aria-current="page" data-jump="form">บันทึกรายจ่าย</button>
+        <button type="button" data-jump="voucher">ใบสำคัญจ่าย</button>
+        <button type="button" data-jump="records">รายการทั้งหมด</button>
+        <button type="button" id="exportCsv">ส่งออก CSV</button>
+      </nav>
+      <div class="doc-nav">
+        <div class="doc-nav-title">Document Templates</div>
+        <label class="petty-limit-field">Petty Cash Limit
+          <input id="pettyCashLimit" type="number" min="0" step="100" value="4000">
+        </label>
+        <button type="button" data-open-doc="voucher">Print Payment Voucher</button>
+        <button type="button" data-open-doc="detail">Expense Detail A4</button>
+        <button type="button" data-open-doc="monthly">Monthly Petty Cash A4</button>
+      </div>
+      <div class="version">v2.3 · Michiko Expense App</div>
+    </aside>
+
+    <main>
+      <section class="topbar">
+        <div>
+          <h1>บันทึกรายจ่าย</h1>
+          <p class="date-line" id="todayText"></p>
+        </div>
+        <div class="toolbar">
+          <button class="secondary print-main-btn" type="button" id="printVoucher">Print Payment Voucher</button>
+          <button class="secondary" type="button" id="clearForm">ล้างฟอร์ม</button>
+          <button class="secondary income-btn" type="button" id="saveIncome">บันทึกรายรับ</button>
+          <button class="primary" type="button" id="saveExpense">บันทึกรายจ่าย</button>
+        </div>
+      </section>
+
+      <div class="grid">
+        <section class="panel form-panel" id="form">
+          <div class="panel-header">
+            <h2>ข้อมูลรายจ่าย</h2>
+            <span class="hint">พิมพ์บางส่วนเพื่อค้นหาข้อมูลที่เคยใช้ หรือกดดาวเพื่อปักหมุดรายการโปรด</span>
+          </div>
+          <div class="panel-body">
+            <label class="dropzone" id="dropzone">
+              <span><strong>แนบใบเสร็จ / รูปภาพ</strong></span>
+              <span>คลิกหรือลากไฟล์ JPG, PNG มาวางที่นี่</span>
+              <input id="receiptInput" type="file" accept="image/png,image/jpeg">
+              <img id="receiptPreview" class="receipt-preview" alt="ตัวอย่างใบเสร็จ">
+            </label>
+
+            <div class="recent-panel" id="recentPanel">
+              <div class="recent-title">รายการล่าสุด</div>
+              <div class="recent-list" id="recentList"></div>
+            </div>
+
+            <div class="form-grid">
+              <label>วันที่
+                <input id="expenseDate" type="date" required>
+              </label>
+              <label>เลขที่เอกสาร (Voucher No.)
+                <input id="voucherNo" type="text" readonly>
+                <span class="hint">M = Michiko · ปี พ.ศ. · เดือน · ลำดับ</span>
+              </label>
+              <label>จ่ายให้ (Paid To)
+                <div class="suggest-field" data-memory="paidTo">
+                  <input id="paidTo" type="text" placeholder="ชื่อร้านค้า / ผู้รับเงิน" autocomplete="off" required>
+                  <button type="button" class="star-btn" title="รายการโปรด">☆</button>
+                  <div class="suggest-menu"></div>
+                </div>
+              </label>
+              <label>สาขา
+                <select id="branch">
+                  <option>สาขาเอ็มสเฟียร์</option>
+                  <option>สาขาพหลโยธิน 21</option>
+                  <option>สาขาทองหล่อ</option>
+                  <option>สาขาอื่น ๆ</option>
+                </select>
+              </label>
+              <label>หมวดหมู่
+                <div class="suggest-field" data-memory="category">
+                  <input id="category" type="text" placeholder="เช่น ค่าเดินทาง" autocomplete="off" required>
+                  <button type="button" class="star-btn" title="รายการโปรด">☆</button>
+                  <div class="suggest-menu"></div>
+                </div>
+              </label>
+              <label>ชำระโดย
+                <select id="paymentMethod">
+                  <option>เงินสด</option>
+                  <option>โอน</option>
+                  <option>เช็คธนาคาร</option>
+                </select>
+              </label>
+              <label>เลขที่บิล / บัญชี / เช็ค
+                <input id="billNo" type="text" placeholder="ถ้ามี">
+              </label>
+              <label>ผู้จัดทำ (Prepared By)
+                <div class="suggest-field" data-memory="preparedBy">
+                  <input id="preparedBy" type="text" placeholder="ชื่อผู้จัดทำ" autocomplete="off" required>
+                  <button type="button" class="star-btn" title="รายการโปรด">☆</button>
+                  <div class="suggest-menu"></div>
+                </div>
+              </label>
+              <label class="full">รายละเอียด (Detail)
+                <textarea id="detail" placeholder="รายละเอียดค่าใช้จ่าย"></textarea>
+              </label>
+            </div>
+
+            <div>
+              <div class="panel-header inline-header">
+                <h2>รายการค่าใช้จ่าย</h2>
+                <button class="secondary" type="button" id="addItem">เพิ่มรายการ</button>
+              </div>
+              <div class="items" id="items"></div>
+            </div>
+
+            <div class="total-box">
+              <div class="total-row">
+                <strong>ยอดรวมทั้งหมด</strong>
+                <span class="total-amount" id="totalAmount">฿0.00</span>
+              </div>
+              <div class="total-text" id="totalText">ศูนย์บาทถ้วน</div>
+            </div>
+
+            <label>หมายเหตุ
+              <textarea id="note" placeholder="หมายเหตุเพิ่มเติม (ถ้ามี)"></textarea>
+            </label>
+            <div class="form-submit-row">
+              <button class="secondary income-btn" type="button" id="saveIncomeBottom">บันทึกรายรับ</button>
+              <button class="primary" type="button" id="saveExpenseBottom">บันทึกรายจ่าย</button>
+            </div>
+          </div>
+        </section>
+
+        <aside class="panel records-panel" id="records">
+          <div class="panel-header">
+            <h2>รายการทั้งหมด</h2>
+            <span class="hint" id="recordCount">0 รายการ</span>
+          </div>
+          <div class="panel-body">
+            <div class="records" id="recordList"></div>
+          </div>
+        </aside>
+      </div>
+
+      <section class="document-detail" id="documentDetail" hidden>
+        <div class="panel document-panel">
+          <div class="panel-header document-header">
+            <div>
+              <h2>Document Detail</h2>
+              <span class="hint" id="documentSubtitle">เลือกเอกสารเพื่อดูตัวอย่างและพิมพ์</span>
+            </div>
+            <div class="toolbar">
+              <button class="secondary doc-tab active" type="button" data-doc-tab="voucher">Payment Voucher</button>
+              <button class="secondary doc-tab" type="button" data-doc-tab="detail">Expense Detail</button>
+              <button class="secondary doc-tab" type="button" data-doc-tab="monthly">Monthly Petty Cash</button>
+            </div>
+          </div>
+          <div class="document-actions">
+            <button class="primary" type="button" id="docPrint">Print Current Document</button>
+            <button class="secondary" type="button" id="docExportPdf">Export PDF / Save as PDF</button>
+            <button class="secondary" type="button" id="docEdit">Edit Record</button>
+            <button class="danger" type="button" id="docDelete">Delete Record</button>
+          </div>
+
+          <div class="document-stage">
+            <section class="doc-template doc-pane active" id="docVoucher" data-doc-pane="voucher">
+              <div class="voucher pv" id="voucher" aria-label="ใบสำคัญจ่าย">
+                <div class="pv-page">
+                  <div class="pv-top-strip"></div>
+
+                  <header class="pv-modern-head">
+            <div class="pv-brand-block">
+              <div class="pv-logo-lockup">
+                <img class="pv-logo" src="assets/michiko-symbol-red.png" alt="Michiko">
+              </div>
+              <div class="pv-head-divider"></div>
+              <div class="pv-company" id="pvCompanyInfo">
+                <strong>บริษัท มิชิโกะ456 จำกัด</strong><br>
+                <strong>MICHIKO456 CO.,LTD.</strong><br>
+                628/630 ศูนย์การค้าเอ็มสเฟียร์ ชั้น 7 EM Tower แขวงคลองตัน เขตคลองเตย กรุงเทพ 10110<br>
+                เลขประจำตัวผู้เสียภาษี 0105567045131<br>
+                โทร : 095-4615442
+              </div>
+            </div>
+
+            <div class="pv-title-block">
+              <div class="pv-title-en">PAYMENT VOUCHER</div>
+              <div class="pv-title-th">ใบสำคัญจ่าย</div>
+              <div class="pv-voucher-card">
+                <div class="pv-card-label">เลขที่ (Voucher No.)</div>
+                <div class="pv-card-value" id="vVoucherNo">-</div>
+              </div>
+            </div>
+          </header>
+
+          <div class="pv-date-line">
+            <span>วันที่ (Date)</span>
+            <strong id="vDate">-</strong>
+          </div>
+
+          <section class="pv-info-grid">
+            <div class="pv-info-card pv-paid-card">
+              <div class="pv-card-heading">จ่ายให้ <span>(Paid To)</span></div>
+              <div class="pv-card-body" id="vPaidTo">-</div>
+            </div>
+
+            <div class="pv-info-card">
+              <div class="pv-card-heading">วิธีการชำระเงิน <span>(Payment Method)</span></div>
+              <div class="pv-check-row">
+                <div><span class="pv-box" id="vCheckCash"></span><b>เงินสด</b><small>Cash</small></div>
+                <div><span class="pv-box" id="vCheckTransfer"></span><b>โอนเงิน</b><small>Transfer</small></div>
+                <div><span class="pv-box" id="vCheckCheque"></span><b>เช็ค</b><small>Cheque</small></div>
+              </div>
+            </div>
+
+          </section>
+
+          <table class="pv-modern-table">
+            <thead>
+              <tr>
+                <th>รายการ (Description)</th>
+                <th>จำนวนเงิน (Amount)</th>
+              </tr>
+            </thead>
+            <tbody id="vItems"></tbody>
+            <tfoot>
+              <tr>
+                <td class="pv-total-label">รวมทั้งสิ้น (Total Amount)</td>
+                <td class="pv-total-value"><span id="vTotal">0.00</span> <span>บาท</span></td>
+              </tr>
+            </tfoot>
+          </table>
+
+          <div class="pv-words-box">
+            <div>จำนวนเงิน (ตัวอักษร) <span>(Amount in Words)</span></div>
+            <strong id="vTotalText">ศูนย์บาทถ้วน</strong>
+          </div>
+
+          <section class="pv-signature-grid">
+            <div class="pv-sign-card">
+              <strong>ผู้รับเงิน</strong>
+              <span>(Receiver)</span>
+              <div class="pv-dot-line" id="vReceivedBy"></div>
+              <small id="vReceivedDate">วันที่ -</small>
+            </div>
+            <div class="pv-sign-card">
+              <strong>ผู้จัดทำ</strong>
+              <span>(Prepared By)</span>
+              <div class="pv-dot-line" id="vPrepared"></div>
+              <small id="vPreparedDate">วันที่ -</small>
+            </div>
+            <div class="pv-sign-card">
+              <strong>ผู้ตรวจสอบ</strong>
+              <span>(Checked By)</span>
+              <div class="pv-dot-line"></div>
+              <small>วันที่ ............../............../..............</small>
+            </div>
+            <div class="pv-sign-card">
+              <strong>ผู้อนุมัติ</strong>
+              <span>(Approved By)</span>
+              <div class="pv-dot-line"></div>
+              <small>วันที่ ............../............../..............</small>
+            </div>
+          </section>
+
+          <footer class="pv-footer">
+            <span id="pvFooterBranch">สาขาเอ็มสเฟียร์</span>
+            <span id="pvFooterCompany">MICHIKO456 CO.,LTD.</span>
+                  </footer>
+                </div>
+              </div>
+            </section>
+
+            <section class="doc-template a4-doc doc-pane" id="docDetail" data-doc-pane="detail">
+              <div class="a4-page a4-ledger-page">
+                <header class="a4-header">
+                  <div>
+                    <h2 id="detailCompanyName">Michiko456 Co.,Ltd.</h2>
+                    <p id="detailCompanyLine">MICHIKO456 CO.,LTD. · สาขาเอ็มสเฟียร์</p>
+                  </div>
+                  <strong id="detailVoucherNo">Expense Detail</strong>
+                </header>
+                <div class="a4-meta">
+                  <div class="detail-receiver-meta"><span>Receiver cash</span><strong id="detailPaidTo">-</strong></div>
+                  <div class="detail-date-meta"><span>Date</span><strong id="detailDate">-</strong></div>
+                </div>
+                <table class="a4-table sheet-table ledger-table">
+                  <thead>
+                    <tr><th>Date</th><th>Reference</th><th>Receiver cash</th><th>Detail</th><th>P.C.No.</th><th>In</th><th>Out</th><th>Balance</th></tr>
+                  </thead>
+                  <tbody id="detailItems"></tbody>
+                  <tfoot><tr><td colspan="4" id="detailBalanceLabel">Petty Cash Balance</td><td></td><td id="detailInTotal">0.00</td><td id="detailOutTotal">0.00</td><td id="detailTotal">0.00</td></tr></tfoot>
+                </table>
+                <section class="sheet-signatures ledger-signatures">
+                  <div><strong>ผู้รับเงิน</strong><span>Date</span><i></i></div>
+                  <div><strong>กรรมการผู้จ่ายเงินสดย่อย</strong><span>Date</span><i></i></div>
+                </section>
+              </div>
+            </section>
+
+            <section class="doc-template a4-doc doc-pane" id="docMonthly" data-doc-pane="monthly">
+              <div class="a4-page a4-reimburse-page">
+                <header class="a4-header">
+                  <div>
+                    <h2 id="monthlyCompanyName">MICHIKO CLINIC</h2>
+                    <p id="monthlyCompanyLine">MICHIKO456 CO.,LTD. · สาขาเอ็มสเฟียร์</p>
+                  </div>
+                  <strong id="monthlyPeriod">Monthly Petty Cash</strong>
+                </header>
+                <div class="a4-summary reimburse-summary">
+                  <div><span>Petty Cash Limit</span><strong id="monthlyLimit">4,000.00</strong></div>
+                  <div><span>Total Expenses</span><strong id="monthlyExpenses">0.00</strong></div>
+                  <div><span>Remaining Cash</span><strong id="monthlyRemaining">0.00</strong></div>
+                  <div><span>Required Reimbursement</span><strong id="monthlyReimbursement">0.00</strong></div>
+                </div>
+                <section class="monthly-account-editor" aria-label="ข้อมูลบัญชีผู้เบิก">
+                  <label>ชื่อบัญชีผู้เบิก
+                    <div class="suggest-field" data-memory="reimbursementAccountNames">
+                      <input id="reimbursementAccountName" type="text" placeholder="ชื่อบัญชีสำหรับรับเงินเบิก" autocomplete="off">
+                      <button type="button" class="star-btn" title="รายการโปรด">☆</button>
+                      <div class="suggest-menu"></div>
+                    </div>
+                  </label>
+                  <label>เลขบัญชีผู้เบิก
+                    <div class="suggest-field" data-memory="reimbursementAccountNumbers">
+                      <input id="reimbursementAccountNo" type="text" placeholder="เช่น 123-4-56789-0" autocomplete="off">
+                      <button type="button" class="star-btn" title="รายการโปรด">☆</button>
+                      <div class="suggest-menu"></div>
+                    </div>
+                  </label>
+                </section>
+                <table class="a4-table sheet-table reimburse-table">
+                  <thead>
+                    <tr><th>Date</th><th>Detail</th><th>Amount</th></tr>
+                  </thead>
+                  <tbody id="monthlyItems"></tbody>
+                  <tfoot><tr><td colspan="2" id="monthlyWords">ศูนย์บาทถ้วน</td><td id="monthlyTotal">0.00</td></tr></tfoot>
+                </table>
+                <section class="sheet-signatures reimburse-signatures">
+                  <div><i></i><strong>ผู้ตรวจสอบ</strong></div>
+                  <div><i></i><strong>กรรมการผู้อนุมัติจ่ายเงินสดย่อย</strong></div>
+                  <div><i></i><strong>ผู้รับเงิน</strong></div>
+                </section>
+              </div>
+            </section>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="app.js"></script>
+</body>
+</html>
