@@ -365,12 +365,16 @@
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
   <div class="branch-picker" id="branchPicker" role="dialog" aria-modal="true" aria-labelledby="branchPickerTitle">
+    <span class="welcome-shape welcome-shape-pink" aria-hidden="true"></span>
+    <span class="welcome-shape welcome-shape-blue" aria-hidden="true"></span>
+    <span class="welcome-shape welcome-shape-yellow" aria-hidden="true"></span>
     <section class="branch-picker-card">
-      <p>Michiko Expense System</p>
-      <h2 id="branchPickerTitle">เลือกสาขาที่ต้องการใช้งาน</h2>
+      <img class="welcome-logo" src="assets/michiko-symbol-red.png" alt="Michiko">
+      <h2 id="branchPickerTitle">Welcome to Michiko Expense System</h2>
+      <p class="welcome-instruction">กรุณาเลือกสาขาที่ต้องการใช้งาน</p>
       <div class="branch-picker-actions">
-        <button type="button" data-branch-choice="emsphere">เอ็มสเฟียร์<br><small>MICHIKO 456 CO., LTD.</small></button>
-        <button type="button" data-branch-choice="phahol">พหลโยธิน 21<br><small>LIFE PARTNER CO., LTD.</small></button>
+        <button type="button" data-branch-choice="phahol"><span>พหลโยธิน</span><small>LIFE PARTNER CO., LTD.</small></button>
+        <button type="button" data-branch-choice="emsphere"><span>EmSphere</span><small>MICHIKO 456 CO., LTD.</small></button>
       </div>
     </section>
   </div>

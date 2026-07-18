@@ -44,35 +44,77 @@ body[data-branch-theme="phahol"] .brand-sub { color: #d7e4e9; }
   z-index: 100;
   display: grid;
   place-items: center;
+  overflow: hidden;
   padding: 24px;
-  background: rgba(34, 28, 25, .56);
-  backdrop-filter: blur(4px);
+  background: #fffdfa;
 }
 .branch-picker[hidden] { display: none; }
 .branch-picker-card {
-  width: min(100%, 620px);
-  padding: 30px;
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  background: var(--paper);
-  box-shadow: var(--shadow);
+  position: relative;
+  z-index: 1;
+  width: min(100%, 660px);
+  padding: 42px 44px 46px;
+  border: 1px solid rgba(103, 73, 64, .12);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, .84);
+  box-shadow: 0 24px 70px rgba(89, 65, 57, .12);
   text-align: center;
+  backdrop-filter: blur(14px);
 }
-.branch-picker-card > p { color: var(--brand); font-size: 14px; font-weight: 800; }
-.branch-picker-card h2 { margin-top: 8px; font-size: 24px; }
-.branch-picker-actions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin-top: 24px; }
+.welcome-logo {
+  display: block;
+  width: 138px;
+  height: 138px;
+  margin: 0 auto 22px;
+  object-fit: contain;
+}
+.branch-picker-card h2 { color: #4f3730; font-size: 28px; font-weight: 700; line-height: 1.25; }
+.welcome-instruction { margin-top: 10px; color: #876e66; font-size: 16px; }
+.branch-picker-actions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; margin-top: 32px; }
 .branch-picker-actions button {
-  min-height: 105px;
-  padding: 16px;
-  border: 1px solid var(--line);
-  border-radius: 6px;
-  background: var(--soft);
-  color: var(--ink);
-  font-weight: 800;
+  min-height: 140px;
+  padding: 24px 18px;
+  border: 1px solid rgba(103, 73, 64, .14);
+  border-radius: 18px;
+  background: rgba(255, 252, 250, .9);
+  color: #4d352e;
+  box-shadow: 0 8px 20px rgba(89, 65, 57, .07);
+  font-weight: 700;
   line-height: 1.4;
+  transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease, background .2s ease;
 }
-.branch-picker-actions button:hover { border-color: var(--brand); background: var(--paper); }
-.branch-picker-actions small { display: block; margin-top: 6px; color: var(--muted); font-size: 11px; font-weight: 600; }
+.branch-picker-actions button span { display: block; font-size: 22px; }
+.branch-picker-actions button:hover,
+.branch-picker-actions button:focus-visible {
+  transform: translateY(-5px);
+  border-color: #b87975;
+  background: #fff;
+  box-shadow: 0 16px 30px rgba(117, 76, 69, .16);
+  outline: none;
+}
+.branch-picker-actions small { display: block; margin-top: 8px; color: #92776e; font-size: 11px; font-weight: 600; letter-spacing: .02em; }
+.welcome-shape {
+  position: absolute;
+  width: min(38vw, 520px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  filter: blur(38px);
+  opacity: .34;
+  pointer-events: none;
+}
+.welcome-shape-pink { top: -18%; left: -12%; background: #f4c7cf; }
+.welcome-shape-blue { right: -14%; bottom: -22%; background: #c8dfef; }
+.welcome-shape-yellow { top: 34%; right: 12%; width: min(22vw, 300px); background: #fae7ad; opacity: .28; }
+@media (max-width: 600px) {
+  .branch-picker { padding: 18px; }
+  .branch-picker-card { padding: 34px 24px; }
+  .welcome-logo { width: 116px; height: 116px; margin-bottom: 18px; }
+  .branch-picker-card h2 { font-size: 24px; }
+  .welcome-instruction { font-size: 15px; }
+  .branch-picker-actions { grid-template-columns: 1fr; gap: 12px; margin-top: 26px; }
+  .branch-picker-actions button { min-height: 96px; padding: 16px; }
+  .welcome-shape { width: 72vw; filter: blur(32px); }
+}
 button, input, select, textarea { font: inherit; }
 button { cursor: pointer; }
 h1, h2, p { margin: 0; }
