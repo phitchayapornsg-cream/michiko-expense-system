@@ -27,6 +27,7 @@ const pettyCashLimitInput = document.getElementById("pettyCashLimit");
 
 const branchProfiles = [
   {
+    id: "phahol",
     match: "พหล",
     branch: "สาขาพหลโยธิน 21",
     companyThai: "บริษัท ไลฟ์ พาร์ทเนอร์ จำกัด",
@@ -39,6 +40,7 @@ const branchProfiles = [
     voucherPrefix: "M"
   },
   {
+    id: "thonglor",
     match: "ทองหล่อ",
     branch: "สาขาทองหล่อ",
     companyThai: "บริษัท มิชิโกะ456 จำกัด",
@@ -51,6 +53,7 @@ const branchProfiles = [
     voucherPrefix: "M"
   },
   {
+    id: "emsphere",
     match: "",
     branch: "สาขาเอ็มสเฟียร์",
     companyThai: "บริษัท มิชิโกะ456 จำกัด",
@@ -78,6 +81,24 @@ function getPettyCashLimit() {
 
 function branchProfile(branchName = fields.branch?.value || "") {
   return branchProfiles.find(profile => profile.match && branchName.includes(profile.match)) || branchProfiles[branchProfiles.length - 1];
+}
+
+function voucherNoForBranch(voucherNo, branchName, dateValue) {
+  const profile = branchProfile(branchName);
+  const date = new Date(`${dateValue || todayISO()}T00:00:00`);
+  const yy = String(date.getFullYear() + 543).slice(-2);
+  const mm = String(date.getMonth() + 1).padStart(2, "0");
+  const serial = String(voucherNo || "").match(/(\d{3})$/)?.[1] || "001";
+  return `${profile.voucherPrefix || "M"}${yy}${mm}${serial}`;
+}
+
+function voucherSerial(voucherNo) {
+  return Number(String(voucherNo || "").match(/(\d{3})$/)?.[1]) || 0;
+}
+
+function applyBranchTheme(branchName = fields.branch?.value || "") {
+  const profile = branchProfile(branchName);
+  document.body.dataset.branchTheme = profile.id === "phahol" ? "phahol" : "emsphere";
 }
 
 function loadJson(key, fallback) {
@@ -575,7 +596,8 @@ function renderExpenseDetail(record) {
   const monthLabel = englishMonthYear(record.date || todayISO());
   const monthRecords = records
     .filter(item => (item.date || "").startsWith(monthKey))
-    .sort((a, b) => String(a.date).localeCompare(String(b.date)));
+    .filter(item => item.branch === record.branch)
+    .sort((a, b) => voucherSerial(a.voucherNo) - voucherSerial(b.voucherNo) || String(a.date).localeCompare(String(b.date)));
   const pettyCashLimit = getPettyCashLimit();
   let balance = pettyCashLimit;
   let incomeTotal = 0;
@@ -600,7 +622,7 @@ function renderExpenseDetail(record) {
     const tr = document.createElement("tr");
     tr.innerHTML = `
       <td>${voucherDate(entry.date)}</td>
-      <td>${escapeHtml(entry.voucherNo || "")}</td>
+      <td>${escapeHtml(voucherNoForBranch(entry.voucherNo, entry.branch, entry.date))}</td>
       <td>${escapeHtml(entry.paidTo || "")}</td>
       <td>${escapeHtml(descriptions)}</td>
       <td>${escapeHtml(entry.billNo || "")}</td>
@@ -747,7 +769,7 @@ function applyDocumentProfile(data = collectForm()) {
 
 function updateVoucher(data = collectForm()) {
   applyDocumentProfile(data);
-  setText("vVoucherNo", data.voucherNo);
+  setText("vVoucherNo", voucherNoForBranch(data.voucherNo, data.branch, data.date));
   setText("vDate", voucherDate(data.date));
   setText("vPaidTo", data.paidTo);
   setText("vPrepared", data.preparedBy);
@@ -878,9 +900,11 @@ function init() {
   fields.date.addEventListener("change", makeVoucherNo);
   fields.branch.addEventListener("change", () => {
     const profile = branchProfile(fields.branch.value);
+    applyBranchTheme(fields.branch.value);
     if (pettyCashLimitInput && !localStorage.getItem("michiko-petty-cash-limit")) {
       pettyCashLimitInput.value = String(profile.pettyCashLimit || 4000);
     }
+    makeVoucherNo();
     updateVoucher();
     renderDocumentTemplates(selectedRecord());
   });
@@ -935,7 +959,22 @@ function init() {
     readReceipt(event.dataTransfer.files[0]);
   });
 
+  const branchPicker = document.getElementById("branchPicker");
+  document.querySelectorAll("[data-branch-choice]").forEach(button => {
+    button.addEventListener("click", () => {
+      const profile = branchProfiles.find(item => item.id === button.dataset.branchChoice);
+      if (!profile) return;
+      fields.branch.value = profile.branch;
+      applyBranchTheme(profile.branch);
+      makeVoucherNo();
+      updateVoucher();
+      renderDocumentTemplates(selectedRecord());
+      branchPicker.hidden = true;
+    });
+  });
+
   addItem();
+  applyBranchTheme();
   makeVoucherNo();
   renderRecords();
   renderRecentItems();

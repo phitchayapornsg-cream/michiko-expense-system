@@ -14,6 +14,65 @@
 * { box-sizing: border-box; }
 html, body { margin: 0; min-height: 100%; }
 body { color: var(--ink); background: #f5f0eb; }
+body[data-branch-theme="emsphere"] {
+  --ink: #4b3027;
+  --muted: #82675e;
+  --line: #ead9d1;
+  --soft: #fbf3ef;
+  --paper: #fffdfb;
+  --brand: #8b5b4b;
+  --brand-2: #c79482;
+  background: #f7f0ec;
+}
+body[data-branch-theme="phahol"] {
+  --ink: #263b47;
+  --muted: #617782;
+  --line: #d5e0e5;
+  --soft: #f0f5f7;
+  --paper: #fcfeff;
+  --brand: #547687;
+  --brand-2: #88a4b1;
+  --shadow: 0 18px 40px rgba(38, 59, 71, .12);
+  background: #eff4f6;
+}
+body[data-branch-theme="phahol"] .sidebar { background: #314b5b; color: #f5fbfd; }
+body[data-branch-theme="phahol"] .brand-sub { color: #d7e4e9; }
+
+.branch-picker {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgba(34, 28, 25, .56);
+  backdrop-filter: blur(4px);
+}
+.branch-picker[hidden] { display: none; }
+.branch-picker-card {
+  width: min(100%, 620px);
+  padding: 30px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--paper);
+  box-shadow: var(--shadow);
+  text-align: center;
+}
+.branch-picker-card > p { color: var(--brand); font-size: 14px; font-weight: 800; }
+.branch-picker-card h2 { margin-top: 8px; font-size: 24px; }
+.branch-picker-actions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin-top: 24px; }
+.branch-picker-actions button {
+  min-height: 105px;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--soft);
+  color: var(--ink);
+  font-weight: 800;
+  line-height: 1.4;
+}
+.branch-picker-actions button:hover { border-color: var(--brand); background: var(--paper); }
+.branch-picker-actions small { display: block; margin-top: 6px; color: var(--muted); font-size: 11px; font-weight: 600; }
 button, input, select, textarea { font: inherit; }
 button { cursor: pointer; }
 h1, h2, p { margin: 0; }
@@ -211,6 +270,33 @@ input:focus, select:focus, textarea:focus { border-color: var(--brand-2); box-sh
   border-radius: 8px;
   box-shadow: var(--shadow);
 }
+body[data-branch-theme="emsphere"] .voucher {
+  --pv-brand: #a06a58;
+  --pv-brand-dark: #74493b;
+  --pv-ink: #4c322b;
+  --pv-muted: #896f65;
+  --pv-line: #e6d3ca;
+  --pv-soft: #fcf4f0;
+}
+body[data-branch-theme="phahol"] .voucher {
+  --pv-brand: #668a9a;
+  --pv-brand-dark: #3f6172;
+  --pv-ink: #263e4b;
+  --pv-muted: #63808d;
+  --pv-line: #cfdde2;
+  --pv-soft: #f3f8fa;
+}
+body[data-branch-theme="emsphere"] .pv-top-strip,
+body[data-branch-theme="emsphere"] .pv-footer { background: #9b6553 !important; border-color: #78483b !important; }
+body[data-branch-theme="emsphere"] .pv-modern-table th { background: #efd9cf; border-color: #c79584; }
+body[data-branch-theme="emsphere"] .pv-modern-table tfoot td { background: #f6e8e2; }
+body[data-branch-theme="phahol"] .pv-top-strip,
+body[data-branch-theme="phahol"] .pv-footer { background: #547687 !important; border-color: #3f6172 !important; }
+body[data-branch-theme="phahol"] .pv-modern-table th { background: #dce9ee; border-color: #86a4b1; }
+body[data-branch-theme="phahol"] .pv-modern-table td,
+body[data-branch-theme="phahol"] .pv-words-box,
+body[data-branch-theme="phahol"] .pv-signature-grid { border-color: #b3c8d1; }
+body[data-branch-theme="phahol"] .pv-modern-table tfoot td { background: #edf4f7; }
 
 .pv {
   font-family: "Sarabun", "Noto Sans Thai", "Segoe UI", Tahoma, sans-serif;
@@ -1035,6 +1121,16 @@ input:focus, select:focus, textarea:focus { border-color: var(--brand-2); box-sh
   font-weight: 800;
   background: #fbf7f4;
 }
+body[data-branch-theme="emsphere"] .a4-header { border-color: #9b6553; color: #78483b; }
+body[data-branch-theme="emsphere"] .a4-table th { background: #9b6553; }
+body[data-branch-theme="phahol"] .a4-header { border-color: #547687; color: #3f6172; }
+body[data-branch-theme="phahol"] .a4-header strong,
+body[data-branch-theme="phahol"] .monthly-account-editor label { color: #3f6172; }
+body[data-branch-theme="phahol"] .a4-table th { background: #547687; }
+body[data-branch-theme="phahol"] .a4-table td,
+body[data-branch-theme="phahol"] .a4-table th,
+body[data-branch-theme="phahol"] .monthly-account-editor input { border-color: #bfd0d7; }
+body[data-branch-theme="phahol"] .a4-table tfoot td { background: #eef5f7; }
 
 @page a4-document {
   size: A4 portrait;
