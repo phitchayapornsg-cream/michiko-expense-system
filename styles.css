@@ -38,7 +38,8 @@ body[data-branch-theme="phahol"] {
 body[data-branch-theme="phahol"] .sidebar { background: #314b5b; color: #f5fbfd; }
 body[data-branch-theme="phahol"] .brand-sub { color: #d7e4e9; }
 
-.branch-picker {
+.branch-picker {display: none !important;
+}
   position: fixed;
   inset: 0;
   z-index: 100;
