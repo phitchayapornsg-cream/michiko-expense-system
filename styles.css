@@ -39,9 +39,6 @@ body[data-branch-theme="phahol"] .sidebar { background: #314b5b; color: #f5fbfd;
 body[data-branch-theme="phahol"] .brand-sub { color: #d7e4e9; }
 
 .branch-picker {
-.branch-picker[hidden] {
-  display: none !important;
-}
   position: fixed;
   inset: 0;
   z-index: 100;
@@ -51,7 +48,10 @@ body[data-branch-theme="phahol"] .brand-sub { color: #d7e4e9; }
   padding: 24px;
   background: #fffdfa;
 }
-.branch-picker[hidden] { display: none; }
+
+.branch-picker[hidden] {
+  display: none !important;
+}
 .branch-picker-card {
   position: relative;
   z-index: 1;
@@ -2035,5 +2035,213 @@ body[data-branch-theme="phahol"] .a4-table tfoot td { background: #eef5f7; }
     background: #8b3f2f !important;
     color: #fff !important;
     justify-content: space-between !important;
+  }
+}
+
+/* Cream request: pastel 4-tone app shell and pastel brown document set. */
+body[data-branch-theme="emsphere"] {
+  --ink: #514046;
+  --muted: #8a7480;
+  --line: #efd9df;
+  --soft: #fff7f3;
+  --paper: #fffefe;
+  --brand: #c45f86;
+  --brand-2: #6da4bf;
+  --shadow: 0 18px 42px rgba(168, 105, 132, .12);
+  background:
+    radial-gradient(circle at 90% 8%, rgba(247, 231, 166, .55), transparent 28%),
+    radial-gradient(circle at 8% 88%, rgba(183, 221, 232, .48), transparent 30%),
+    linear-gradient(135deg, #fff9fb 0%, #fff8ed 48%, #f7fbff 100%);
+}
+
+body[data-branch-theme="emsphere"] .sidebar {
+  color: #4d3b43;
+  background:
+    linear-gradient(145deg,
+      rgba(244, 182, 194, .94) 0%,
+      rgba(247, 231, 166, .92) 34%,
+      rgba(183, 221, 232, .94) 66%,
+      rgba(200, 182, 226, .96) 100%);
+  box-shadow: 10px 0 30px rgba(133, 99, 118, .14);
+}
+
+body[data-branch-theme="emsphere"] .brand-title,
+body[data-branch-theme="emsphere"] .nav button,
+body[data-branch-theme="emsphere"] .doc-nav button,
+body[data-branch-theme="emsphere"] .doc-nav-title,
+body[data-branch-theme="emsphere"] .petty-limit-field,
+body[data-branch-theme="emsphere"] .version {
+  color: #4d3b43;
+}
+
+body[data-branch-theme="emsphere"] .brand-sub {
+  color: #6f5965;
+}
+
+body[data-branch-theme="emsphere"] .nav button,
+body[data-branch-theme="emsphere"] .doc-nav button,
+body[data-branch-theme="emsphere"] .petty-limit-field input {
+  border-color: rgba(255, 255, 255, .58);
+  background: rgba(255, 255, 255, .34);
+}
+
+body[data-branch-theme="emsphere"] .nav button[aria-current="page"],
+body[data-branch-theme="emsphere"] .nav button:hover,
+body[data-branch-theme="emsphere"] .doc-nav button:hover {
+  background: rgba(255, 255, 255, .58);
+}
+
+body[data-branch-theme="emsphere"] .petty-limit-field input {
+  color: #4d3b43;
+}
+
+body[data-branch-theme="emsphere"] .panel-header {
+  background: linear-gradient(90deg, #fff7fb 0%, #fff9e7 45%, #f2fbff 100%);
+}
+
+body[data-branch-theme="emsphere"] .primary {
+  background: #c45f86;
+  box-shadow: 0 8px 18px rgba(196, 95, 134, .22);
+}
+
+body[data-branch-theme="emsphere"] .primary:hover {
+  background: #b55078;
+}
+
+body[data-branch-theme="emsphere"] .secondary,
+body[data-branch-theme="emsphere"] .icon-btn {
+  background: #f3fbff;
+  color: #4f89a8;
+  border-color: #c9e4ef;
+}
+
+body[data-branch-theme="emsphere"] .income-btn,
+body[data-branch-theme="emsphere"] .recent-chip {
+  background: #fff8dc;
+  color: #8b6f18;
+  border-color: #efd986;
+}
+
+body[data-branch-theme="emsphere"] .dropzone {
+  border-color: #e7a9bd;
+  background: linear-gradient(135deg, rgba(255, 247, 251, .95), rgba(243, 251, 255, .95));
+}
+
+body[data-branch-theme="emsphere"] .total-box {
+  background: linear-gradient(135deg, #fff0f6 0%, #fff8dc 48%, #eef9fd 100%);
+}
+
+.voucher,
+body[data-branch-theme="emsphere"] .voucher,
+body[data-branch-theme="phahol"] .voucher {
+  --pv-brand: #b98f76;
+  --pv-brand-dark: #805d4d;
+  --pv-ink: #3f3029;
+  --pv-muted: #8a7368;
+  --pv-line: #dbc6b7;
+  --pv-soft: #fbf3ec;
+}
+
+.pv-top-strip,
+.pv-footer,
+body[data-branch-theme="emsphere"] .pv-top-strip,
+body[data-branch-theme="emsphere"] .pv-footer,
+body[data-branch-theme="phahol"] .pv-top-strip,
+body[data-branch-theme="phahol"] .pv-footer {
+  background: linear-gradient(90deg, #8f6755, #c8a188) !important;
+  border-color: #7a5546 !important;
+}
+
+.pv-card-heading,
+.pv-modern-table th,
+body[data-branch-theme="emsphere"] .pv-modern-table th,
+body[data-branch-theme="phahol"] .pv-modern-table th {
+  background: #ead8ca !important;
+  color: #6f4f41 !important;
+  border-color: #b9947d !important;
+}
+
+.pv-modern-table td,
+.pv-words-box,
+.pv-signature-grid,
+.pv-sign-card,
+body[data-branch-theme="phahol"] .pv-modern-table td,
+body[data-branch-theme="phahol"] .pv-words-box,
+body[data-branch-theme="phahol"] .pv-signature-grid {
+  border-color: #d0b4a3 !important;
+}
+
+.pv-modern-table tfoot td,
+body[data-branch-theme="emsphere"] .pv-modern-table tfoot td,
+body[data-branch-theme="phahol"] .pv-modern-table tfoot td {
+  background: #f3e7de !important;
+}
+
+.pv-voucher-card,
+.pv-info-card {
+  border-color: #dbc6b7;
+  background: #fffaf6;
+}
+
+.a4-header,
+body[data-branch-theme="emsphere"] .a4-header,
+body[data-branch-theme="phahol"] .a4-header {
+  border-color: #b98f76 !important;
+  color: #6f4f41 !important;
+}
+
+.a4-header h2,
+.a4-ledger-page .a4-header h2,
+.a4-reimburse-page .a4-header h2,
+.a4-ledger-page .a4-header strong,
+.a4-reimburse-page .a4-header strong {
+  color: #6f4f41 !important;
+}
+
+.a4-table th,
+.sheet-table th,
+body[data-branch-theme="emsphere"] .a4-table th,
+body[data-branch-theme="phahol"] .a4-table th {
+  background: #d8bfae !important;
+  color: #4d392f !important;
+  border-color: #a9836d !important;
+}
+
+.a4-table td,
+.sheet-table td,
+body[data-branch-theme="phahol"] .a4-table td,
+body[data-branch-theme="phahol"] .a4-table th {
+  border-color: #dcc8ba !important;
+}
+
+.a4-table tfoot td,
+.sheet-table tfoot td,
+body[data-branch-theme="phahol"] .a4-table tfoot td {
+  background: #f3e8df !important;
+  color: #5d4438 !important;
+}
+
+@media print {
+  .pv-top-strip,
+  .pv-footer,
+  body.print-voucher .pv-footer {
+    background: linear-gradient(90deg, #8f6755, #c8a188) !important;
+    color: #fff !important;
+  }
+
+  body.print-voucher .pv-modern-table th {
+    background: #ead8ca !important;
+    border-color: #b9947d !important;
+    color: #6f4f41 !important;
+  }
+
+  body.print-voucher .pv-modern-table td,
+  body.print-voucher .pv-words-box,
+  body.print-voucher .pv-signature-grid {
+    border-color: #d0b4a3 !important;
+  }
+
+  body.print-voucher .pv-modern-table tfoot td {
+    background: #f3e7de !important;
   }
 }
