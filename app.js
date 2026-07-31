@@ -312,6 +312,10 @@ function formatPlainMoney(value) {
 }
 
 function makeVoucherNo() {
+  if (editingRecordId) {
+    updateVoucher();
+    return;
+  }
   const d = new Date(fields.date.value + "T00:00:00");
   const yy = String(d.getFullYear() + 543).slice(-2);
   const mm = String(d.getMonth() + 1).padStart(2, "0");
@@ -454,6 +458,7 @@ function saveRecord(recordType = "expense") {
   const editIndex = records.findIndex(record => record.id === editingRecordId);
   if (editIndex >= 0) {
     data.id = records[editIndex].id;
+    data.voucherNo = records[editIndex].voucherNo;
     data.createdAt = records[editIndex].createdAt || data.createdAt;
     data.updatedAt = new Date().toISOString();
     records[editIndex] = data;
