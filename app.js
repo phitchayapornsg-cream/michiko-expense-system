@@ -680,18 +680,19 @@ function renderMonthlyPettyCash(record) {
   const reimbursementThaiMonthLabel = thaiMonthYear(record.date || todayISO(), 1);
   const monthEndThaiDate = endOfMonthThaiDate(record.date || todayISO());
   const monthRecords = records.filter(item => (item.date || "").startsWith(monthKey));
-  const total = monthRecords
-    .filter(item => item.recordType !== "income")
+  const expenseRecords = monthRecords.filter(item => item.recordType !== "income");
+  const total = expenseRecords
     .reduce((sum, item) => sum + (Number(item.total) || 0), 0);
   const incomeTotal = monthRecords
     .filter(item => item.recordType === "income")
     .reduce((sum, item) => sum + (Number(item.total) || 0), 0);
   const limit = getPettyCashLimit();
-  const remaining = Math.max(0, limit + incomeTotal - total);
+  const remaining = limit + incomeTotal - total;
   const reimbursement = Math.max(0, limit - remaining);
+  const overBudgetText = remaining < 0 ? ` (${formatPlainMoney(remaining)})` : "";
   setText("monthlyPeriod", reimbursementMonthLabel);
   setText("monthlyLimit", formatPlainMoney(limit));
-  setText("monthlyExpenses", formatPlainMoney(total));
+  setText("monthlyExpenses", `${expenseRecords.length} รายการ · ${formatPlainMoney(total)}${overBudgetText}`);
   setText("monthlyRemaining", formatPlainMoney(remaining));
   setText("monthlyReimbursement", formatPlainMoney(reimbursement));
   setText("monthlyWords", thaiBahtText(reimbursement));
