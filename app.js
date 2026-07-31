@@ -621,6 +621,7 @@ function renderDocumentTemplates(record) {
 }
 
 function renderExpenseDetail(record) {
+  const currentDocDate = voucherDate(todayISO());
   const monthKey = (record.date || todayISO()).slice(0, 7);
   const monthLabel = englishMonthYear(record.date || todayISO());
   const monthRecords = records
@@ -632,8 +633,10 @@ function renderExpenseDetail(record) {
   let incomeTotal = 0;
   let outTotal = 0;
   setText("detailVoucherNo", `Expense Detail ${monthLabel}`);
-  setText("detailDate", voucherDate(todayISO()));
+  setText("detailDate", currentDocDate);
   setText("detailPaidTo", record.paidTo || "-");
+  setText("detailReceiverDate", `Date ${currentDocDate}`);
+  setText("detailApprovedDate", `Date ${currentDocDate}`);
   setText("detailBalanceLabel", `Petty Cash Balance as of ${monthLabel}`);
   const body = document.getElementById("detailItems");
   body.innerHTML = "";
@@ -809,14 +812,17 @@ function applyDocumentProfile(data = collectForm()) {
 }
 
 function updateVoucher(data = collectForm()) {
+  const currentDocDate = voucherDate(todayISO());
   applyDocumentProfile(data);
   setText("vVoucherNo", voucherNoForBranch(data.voucherNo, data.branch, data.date));
-  setText("vDate", voucherDate(data.date));
+  setText("vDate", currentDocDate);
   setText("vPaidTo", data.paidTo);
   setText("vPrepared", data.preparedBy);
   setText("vReceivedBy", data.paidTo);
-  setText("vReceivedDate", `วันที่ ${voucherDate(data.date)}`);
-  setText("vPreparedDate", `วันที่ ${voucherDate(data.date)}`);
+  setText("vReceivedDate", `วันที่ ${currentDocDate}`);
+  setText("vPreparedDate", `วันที่ ${currentDocDate}`);
+  setText("vCheckedDate", `วันที่ ${currentDocDate}`);
+  setText("vApprovedDate", `วันที่ ${currentDocDate}`);
   setText("vTotal", formatPlainMoney(data.total));
   setText("vTotalText", thaiBahtText(data.total));
   document.getElementById("vCheckCash").textContent = data.paymentMethod === "เงินสด" ? "✓" : "";

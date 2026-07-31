@@ -1153,6 +1153,20 @@ body[data-branch-theme="phahol"] .pv-modern-table tfoot td { background: #edf4f7
   }
 }
 
+/* Final date placement override: top document dates are intentionally hidden. */
+body .pv-date-line,
+body .detail-date-meta,
+body.print-voucher .pv-date-line,
+body.print-detail .detail-date-meta {
+  display: none !important;
+}
+
+/* Cream request: document dates live in the signature area, not the top metadata. */
+.pv-date-line,
+.detail-date-meta {
+  display: none !important;
+}
+
 /* Print color boost: richer branch document palettes for clearer paper output. */
 body[data-branch-theme="phahol"] .voucher {
   --pv-brand: #5f8796;
@@ -2725,4 +2739,12 @@ body[data-branch-theme="emsphere"] .sheet-table tfoot td {
     color: #4d2f2b !important;
     border-color: #b67668 !important;
   }
+}
+
+/* Final date placement override: top document dates are intentionally hidden. */
+body .pv-date-line,
+body .detail-date-meta,
+body.print-voucher .pv-date-line,
+body.print-detail .detail-date-meta {
+  display: none !important;
 }

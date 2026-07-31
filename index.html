@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Michiko Expense App</title>
-  <link rel="stylesheet" href="styles.css?v=20260731c">
+  <link rel="stylesheet" href="styles.css?v=20260731d">
 </head>
 <body>
   <div class="app">
@@ -268,13 +268,13 @@
               <strong>ผู้ตรวจสอบ</strong>
               <span>(Checked By)</span>
               <div class="pv-dot-line"></div>
-              <small>วันที่ ............../............../..............</small>
+              <small id="vCheckedDate">วันที่ -</small>
             </div>
             <div class="pv-sign-card">
               <strong>ผู้อนุมัติ</strong>
               <span>(Approved By)</span>
               <div class="pv-dot-line"></div>
-              <small>วันที่ ............../............../..............</small>
+              <small id="vApprovedDate">วันที่ -</small>
             </div>
           </section>
 
@@ -307,8 +307,8 @@
                   <tfoot><tr><td colspan="4" id="detailBalanceLabel">Petty Cash Balance</td><td></td><td id="detailInTotal">0.00</td><td id="detailOutTotal">0.00</td><td id="detailTotal">0.00</td></tr></tfoot>
                 </table>
                 <section class="sheet-signatures ledger-signatures">
-                  <div><strong>ผู้รับเงิน</strong><span>Date</span><i></i></div>
-                  <div><strong>กรรมการผู้จ่ายเงินสดย่อย</strong><span>Date</span><i></i></div>
+                  <div><strong>ผู้รับเงิน</strong><span id="detailReceiverDate">Date</span><i></i></div>
+                  <div><strong>กรรมการผู้จ่ายเงินสดย่อย</strong><span id="detailApprovedDate">Date</span><i></i></div>
                 </section>
               </div>
             </section>
@@ -379,6 +379,6 @@
       </div>
     </section>
   </div>
-  <script src="app.js?v=20260731k"></script>
+  <script src="app.js?v=20260731l"></script>
 </body>
 </html>
