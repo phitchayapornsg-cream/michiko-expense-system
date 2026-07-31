@@ -676,6 +676,7 @@ function renderExpenseDetail(record) {
 }
 
 function renderMonthlyPettyCash(record) {
+  const currentDocDate = voucherDate(todayISO());
   fields.reimbursementAccountName.value = record.reimbursementAccountName || "";
   fields.reimbursementAccountNo.value = record.reimbursementAccountNo || "";
   const monthKey = (record.date || todayISO()).slice(0, 7);
@@ -701,11 +702,14 @@ function renderMonthlyPettyCash(record) {
   setText("monthlyReimbursement", formatPlainMoney(reimbursement));
   setText("monthlyWords", thaiBahtText(reimbursement));
   setText("monthlyTotal", formatPlainMoney(reimbursement));
+  setText("monthlyCheckedDate", "");
+  setText("monthlyApprovedDate", "");
+  setText("monthlyReceiverDate", `Date ${currentDocDate}`);
   const body = document.getElementById("monthlyItems");
   body.innerHTML = "";
   const tr = document.createElement("tr");
   tr.innerHTML = `
-    <td>${voucherDate(todayISO())}</td>
+    <td></td>
     <td>ขอเบิกเงินสดย่อยประจำเดือน ${reimbursementThaiMonthLabel}</td>
     <td style="text-align:right">${formatPlainMoney(reimbursement)}</td>
   `;
