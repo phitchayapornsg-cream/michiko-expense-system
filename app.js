@@ -692,7 +692,7 @@ function renderMonthlyPettyCash(record) {
   const overBudgetText = remaining < 0 ? ` (${formatPlainMoney(remaining)})` : "";
   setText("monthlyPeriod", reimbursementMonthLabel);
   setText("monthlyLimit", formatPlainMoney(limit));
-  setText("monthlyExpenses", `${expenseRecords.length} รายการ · ${formatPlainMoney(total)}${overBudgetText}`);
+  setText("monthlyExpenses", `${formatPlainMoney(total)}${overBudgetText}`);
   setText("monthlyRemaining", formatPlainMoney(remaining));
   setText("monthlyReimbursement", formatPlainMoney(reimbursement));
   setText("monthlyWords", thaiBahtText(reimbursement));
