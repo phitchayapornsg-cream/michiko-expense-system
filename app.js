@@ -310,6 +310,21 @@ function nextEnglishMonthYear(value) {
   return date.toLocaleDateString("en-US", { month: "long", year: "numeric" });
 }
 
+function thaiMonthYear(value, offsetMonths = 0) {
+  if (!value) return "-";
+  const date = new Date(`${value.slice(0, 7)}-01T00:00:00`);
+  date.setMonth(date.getMonth() + offsetMonths);
+  return date.toLocaleDateString("th-TH", { month: "long", year: "numeric" });
+}
+
+function endOfMonthThaiDate(value) {
+  if (!value) return "-";
+  const date = new Date(`${value.slice(0, 7)}-01T00:00:00`);
+  date.setMonth(date.getMonth() + 1);
+  date.setDate(0);
+  return date.toLocaleDateString("th-TH", { day: "numeric", month: "long", year: "numeric" });
+}
+
 function formatMoney(value) {
   return new Intl.NumberFormat("th-TH", { style: "currency", currency: "THB" }).format(value || 0);
 }
@@ -662,6 +677,8 @@ function renderMonthlyPettyCash(record) {
   const monthKey = (record.date || todayISO()).slice(0, 7);
   const monthLabel = englishMonthYear(record.date || todayISO());
   const reimbursementMonthLabel = nextEnglishMonthYear(record.date || todayISO());
+  const reimbursementThaiMonthLabel = thaiMonthYear(record.date || todayISO(), 1);
+  const monthEndThaiDate = endOfMonthThaiDate(record.date || todayISO());
   const monthRecords = records.filter(item => (item.date || "").startsWith(monthKey));
   const total = monthRecords
     .filter(item => item.recordType !== "income")
@@ -672,7 +689,7 @@ function renderMonthlyPettyCash(record) {
   const limit = getPettyCashLimit();
   const remaining = Math.max(0, limit + incomeTotal - total);
   const reimbursement = Math.max(0, limit - remaining);
-  setText("monthlyPeriod", monthLabel);
+  setText("monthlyPeriod", reimbursementMonthLabel);
   setText("monthlyLimit", formatPlainMoney(limit));
   setText("monthlyExpenses", formatPlainMoney(total));
   setText("monthlyRemaining", formatPlainMoney(remaining));
@@ -684,10 +701,17 @@ function renderMonthlyPettyCash(record) {
   const tr = document.createElement("tr");
   tr.innerHTML = `
     <td>${voucherDate(todayISO())}</td>
-    <td>ขอเบิกเงินสดย่อยประจำเดือน ${reimbursementMonthLabel}</td>
+    <td>ขอเบิกเงินสดย่อยประจำเดือน ${reimbursementThaiMonthLabel}</td>
     <td style="text-align:right">${formatPlainMoney(reimbursement)}</td>
   `;
   body.appendChild(tr);
+  const summaryRow = document.createElement("tr");
+  summaryRow.innerHTML = `
+    <td></td>
+    <td>เงินสดย่อยหน้าร้านคงเหลือ ณ วันที่ ${monthEndThaiDate} จำนวนเงิน ${formatPlainMoney(remaining)} บาท<br>ขอเบิกเงินสดย่อยประจำเดือน ${reimbursementThaiMonthLabel} จำนวนเงิน ${formatPlainMoney(reimbursement)} บาท</td>
+    <td></td>
+  `;
+  body.appendChild(summaryRow);
   const bankRow = document.createElement("tr");
   const accountName = record.reimbursementAccountName || "-";
   const accountNo = record.reimbursementAccountNo || "-";
