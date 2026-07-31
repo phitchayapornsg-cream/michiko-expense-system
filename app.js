@@ -303,6 +303,13 @@ function englishMonthYear(value) {
   return date.toLocaleDateString("en-US", { month: "long", year: "numeric" });
 }
 
+function nextEnglishMonthYear(value) {
+  if (!value) return "-";
+  const date = new Date(`${value.slice(0, 7)}-01T00:00:00`);
+  date.setMonth(date.getMonth() + 1);
+  return date.toLocaleDateString("en-US", { month: "long", year: "numeric" });
+}
+
 function formatMoney(value) {
   return new Intl.NumberFormat("th-TH", { style: "currency", currency: "THB" }).format(value || 0);
 }
@@ -654,6 +661,7 @@ function renderMonthlyPettyCash(record) {
   fields.reimbursementAccountNo.value = record.reimbursementAccountNo || "";
   const monthKey = (record.date || todayISO()).slice(0, 7);
   const monthLabel = englishMonthYear(record.date || todayISO());
+  const reimbursementMonthLabel = nextEnglishMonthYear(record.date || todayISO());
   const monthRecords = records.filter(item => (item.date || "").startsWith(monthKey));
   const total = monthRecords
     .filter(item => item.recordType !== "income")
@@ -675,8 +683,8 @@ function renderMonthlyPettyCash(record) {
   body.innerHTML = "";
   const tr = document.createElement("tr");
   tr.innerHTML = `
-    <td>${voucherDate(record.date)}</td>
-    <td>ขอเบิกเงินสดย่อยประจำเดือน ${monthLabel}</td>
+    <td>${voucherDate(todayISO())}</td>
+    <td>ขอเบิกเงินสดย่อยประจำเดือน ${reimbursementMonthLabel}</td>
     <td style="text-align:right">${formatPlainMoney(reimbursement)}</td>
   `;
   body.appendChild(tr);
