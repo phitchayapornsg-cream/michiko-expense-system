@@ -2245,3 +2245,204 @@ body[data-branch-theme="phahol"] .a4-table tfoot td {
     background: #f3e7de !important;
   }
 }
+
+/* Branch document palettes: clear pastel tones that stay readable when printed. */
+body[data-branch-theme="phahol"] .voucher {
+  --pv-brand: #7894a0;
+  --pv-brand-dark: #415f6b;
+  --pv-ink: #263943;
+  --pv-muted: #607784;
+  --pv-line: #9fb3bd;
+  --pv-soft: #edf3f5;
+}
+
+body[data-branch-theme="emsphere"] .voucher {
+  --pv-brand: #bf8a80;
+  --pv-brand-dark: #7b5149;
+  --pv-ink: #3f302d;
+  --pv-muted: #806a65;
+  --pv-line: #c9a89f;
+  --pv-soft: #fbefeb;
+}
+
+body[data-branch-theme="phahol"] .pv-top-strip,
+body[data-branch-theme="phahol"] .pv-footer {
+  background: linear-gradient(90deg, #415f6b, #8fa7b0) !important;
+  border-color: #354f5a !important;
+  color: #fff !important;
+}
+
+body[data-branch-theme="emsphere"] .pv-top-strip,
+body[data-branch-theme="emsphere"] .pv-footer {
+  background: linear-gradient(90deg, #7b5149, #c9958b) !important;
+  border-color: #69443d !important;
+  color: #fff !important;
+}
+
+body[data-branch-theme="phahol"] .pv-card-heading,
+body[data-branch-theme="phahol"] .pv-modern-table th {
+  background: #d7e2e6 !important;
+  color: #304d59 !important;
+  border-color: #7f9aa6 !important;
+}
+
+body[data-branch-theme="emsphere"] .pv-card-heading,
+body[data-branch-theme="emsphere"] .pv-modern-table th {
+  background: #efd8d2 !important;
+  color: #68453f !important;
+  border-color: #b8897d !important;
+}
+
+body[data-branch-theme="phahol"] .pv-info-card,
+body[data-branch-theme="phahol"] .pv-voucher-card,
+body[data-branch-theme="phahol"] .pv-modern-table td,
+body[data-branch-theme="phahol"] .pv-words-box,
+body[data-branch-theme="phahol"] .pv-signature-grid,
+body[data-branch-theme="phahol"] .pv-sign-card {
+  border-color: #a2b7c0 !important;
+}
+
+body[data-branch-theme="emsphere"] .pv-info-card,
+body[data-branch-theme="emsphere"] .pv-voucher-card,
+body[data-branch-theme="emsphere"] .pv-modern-table td,
+body[data-branch-theme="emsphere"] .pv-words-box,
+body[data-branch-theme="emsphere"] .pv-signature-grid,
+body[data-branch-theme="emsphere"] .pv-sign-card {
+  border-color: #caa79d !important;
+}
+
+body[data-branch-theme="phahol"] .pv-modern-table tfoot td {
+  background: #e7eff2 !important;
+  color: #2f4650 !important;
+}
+
+body[data-branch-theme="emsphere"] .pv-modern-table tfoot td {
+  background: #f5e6e1 !important;
+  color: #60423c !important;
+}
+
+body[data-branch-theme="phahol"] .pv-voucher-card,
+body[data-branch-theme="phahol"] .pv-info-card {
+  background: #fbfdfe !important;
+}
+
+body[data-branch-theme="emsphere"] .pv-voucher-card,
+body[data-branch-theme="emsphere"] .pv-info-card {
+  background: #fffaf8 !important;
+}
+
+body[data-branch-theme="phahol"] .a4-header {
+  border-color: #7894a0 !important;
+  color: #304d59 !important;
+}
+
+body[data-branch-theme="emsphere"] .a4-header {
+  border-color: #bf8a80 !important;
+  color: #68453f !important;
+}
+
+body[data-branch-theme="phahol"] .a4-header h2,
+body[data-branch-theme="phahol"] .a4-ledger-page .a4-header h2,
+body[data-branch-theme="phahol"] .a4-reimburse-page .a4-header h2,
+body[data-branch-theme="phahol"] .a4-ledger-page .a4-header strong,
+body[data-branch-theme="phahol"] .a4-reimburse-page .a4-header strong {
+  color: #304d59 !important;
+}
+
+body[data-branch-theme="emsphere"] .a4-header h2,
+body[data-branch-theme="emsphere"] .a4-ledger-page .a4-header h2,
+body[data-branch-theme="emsphere"] .a4-reimburse-page .a4-header h2,
+body[data-branch-theme="emsphere"] .a4-ledger-page .a4-header strong,
+body[data-branch-theme="emsphere"] .a4-reimburse-page .a4-header strong {
+  color: #68453f !important;
+}
+
+body[data-branch-theme="phahol"] .a4-table th,
+body[data-branch-theme="phahol"] .sheet-table th {
+  background: #d7e2e6 !important;
+  color: #253c46 !important;
+  border-color: #7f9aa6 !important;
+}
+
+body[data-branch-theme="emsphere"] .a4-table th,
+body[data-branch-theme="emsphere"] .sheet-table th {
+  background: #efd8d2 !important;
+  color: #563932 !important;
+  border-color: #b8897d !important;
+}
+
+body[data-branch-theme="phahol"] .a4-table td,
+body[data-branch-theme="phahol"] .a4-table th,
+body[data-branch-theme="phahol"] .sheet-table td,
+body[data-branch-theme="phahol"] .sheet-table th {
+  border-color: #98afb9 !important;
+}
+
+body[data-branch-theme="emsphere"] .a4-table td,
+body[data-branch-theme="emsphere"] .a4-table th,
+body[data-branch-theme="emsphere"] .sheet-table td,
+body[data-branch-theme="emsphere"] .sheet-table th {
+  border-color: #c6a299 !important;
+}
+
+body[data-branch-theme="phahol"] .a4-table tfoot td,
+body[data-branch-theme="phahol"] .sheet-table tfoot td {
+  background: #e7eff2 !important;
+  color: #2f4650 !important;
+}
+
+body[data-branch-theme="emsphere"] .a4-table tfoot td,
+body[data-branch-theme="emsphere"] .sheet-table tfoot td {
+  background: #f5e6e1 !important;
+  color: #60423c !important;
+}
+
+@media print {
+  body[data-branch-theme="phahol"] .pv-top-strip,
+  body[data-branch-theme="phahol"] .pv-footer,
+  body[data-branch-theme="phahol"].print-voucher .pv-footer {
+    background: linear-gradient(90deg, #415f6b, #8fa7b0) !important;
+    border-color: #354f5a !important;
+    color: #fff !important;
+  }
+
+  body[data-branch-theme="emsphere"] .pv-top-strip,
+  body[data-branch-theme="emsphere"] .pv-footer,
+  body[data-branch-theme="emsphere"].print-voucher .pv-footer {
+    background: linear-gradient(90deg, #7b5149, #c9958b) !important;
+    border-color: #69443d !important;
+    color: #fff !important;
+  }
+
+  body[data-branch-theme="phahol"] .pv-modern-table th,
+  body[data-branch-theme="phahol"] .a4-table th,
+  body[data-branch-theme="phahol"] .sheet-table th {
+    background: #d7e2e6 !important;
+    color: #253c46 !important;
+    border-color: #7f9aa6 !important;
+  }
+
+  body[data-branch-theme="emsphere"] .pv-modern-table th,
+  body[data-branch-theme="emsphere"] .a4-table th,
+  body[data-branch-theme="emsphere"] .sheet-table th {
+    background: #efd8d2 !important;
+    color: #563932 !important;
+    border-color: #b8897d !important;
+  }
+
+  body[data-branch-theme="phahol"] .pv-modern-table td,
+  body[data-branch-theme="phahol"] .pv-words-box,
+  body[data-branch-theme="phahol"] .pv-signature-grid,
+  body[data-branch-theme="phahol"] .a4-table td,
+  body[data-branch-theme="phahol"] .sheet-table td {
+    border-color: #98afb9 !important;
+  }
+
+  body[data-branch-theme="emsphere"] .pv-modern-table td,
+  body[data-branch-theme="emsphere"] .pv-words-box,
+  body[data-branch-theme="emsphere"] .pv-signature-grid,
+  body[data-branch-theme="emsphere"] .a4-table td,
+  body[data-branch-theme="emsphere"] .sheet-table td {
+    border-color: #c6a299 !important;
+  }
+}
