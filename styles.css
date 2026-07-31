@@ -1161,7 +1161,7 @@ body.print-detail .detail-date-meta {
   display: none !important;
 }
 
-/* Expense Detail signatures: keep date under the role name and shorten signature lines. */
+/* Expense Detail signatures: keep date under the signature line and shorten lines. */
 .ledger-signatures i {
   width: 68%;
   justify-self: center;
