@@ -1153,6 +1153,165 @@ body[data-branch-theme="phahol"] .pv-modern-table tfoot td { background: #edf4f7
   }
 }
 
+/* Print color boost: richer branch document palettes for clearer paper output. */
+body[data-branch-theme="phahol"] .voucher {
+  --pv-brand: #5f8796;
+  --pv-brand-dark: #2f6072;
+  --pv-line: #6f96a4;
+  --pv-soft: #dceaf0;
+}
+
+body[data-branch-theme="emsphere"] .voucher {
+  --pv-brand: #c07680;
+  --pv-brand-dark: #874a43;
+  --pv-line: #b67668;
+  --pv-soft: #f0d2c9;
+}
+
+body[data-branch-theme="phahol"] .pv-top-strip,
+body[data-branch-theme="phahol"] .pv-footer {
+  background: linear-gradient(90deg, #2f6072, #7fa2af) !important;
+  border-color: #294f5e !important;
+}
+
+body[data-branch-theme="emsphere"] .pv-top-strip,
+body[data-branch-theme="emsphere"] .pv-footer {
+  background: linear-gradient(90deg, #874a43, #d08a92) !important;
+  border-color: #713d37 !important;
+}
+
+body[data-branch-theme="phahol"] .pv-card-heading,
+body[data-branch-theme="phahol"] .pv-modern-table th,
+body[data-branch-theme="phahol"] .a4-table th,
+body[data-branch-theme="phahol"] .sheet-table th {
+  background: #c4d9e1 !important;
+  color: #203f4d !important;
+  border-color: #6f96a4 !important;
+}
+
+body[data-branch-theme="emsphere"] .pv-card-heading,
+body[data-branch-theme="emsphere"] .pv-modern-table th,
+body[data-branch-theme="emsphere"] .a4-table th,
+body[data-branch-theme="emsphere"] .sheet-table th {
+  background: #edc8bf !important;
+  color: #4d2f2b !important;
+  border-color: #b67668 !important;
+}
+
+body[data-branch-theme="phahol"] .pv-info-card,
+body[data-branch-theme="phahol"] .pv-voucher-card,
+body[data-branch-theme="phahol"] .pv-modern-table td,
+body[data-branch-theme="phahol"] .pv-words-box,
+body[data-branch-theme="phahol"] .pv-signature-grid,
+body[data-branch-theme="phahol"] .pv-sign-card,
+body[data-branch-theme="phahol"] .a4-table td,
+body[data-branch-theme="phahol"] .a4-table th,
+body[data-branch-theme="phahol"] .sheet-table td,
+body[data-branch-theme="phahol"] .sheet-table th {
+  border-color: #7fa2af !important;
+}
+
+body[data-branch-theme="emsphere"] .pv-info-card,
+body[data-branch-theme="emsphere"] .pv-voucher-card,
+body[data-branch-theme="emsphere"] .pv-modern-table td,
+body[data-branch-theme="emsphere"] .pv-words-box,
+body[data-branch-theme="emsphere"] .pv-signature-grid,
+body[data-branch-theme="emsphere"] .pv-sign-card,
+body[data-branch-theme="emsphere"] .a4-table td,
+body[data-branch-theme="emsphere"] .a4-table th,
+body[data-branch-theme="emsphere"] .sheet-table td,
+body[data-branch-theme="emsphere"] .sheet-table th {
+  border-color: #c18477 !important;
+}
+
+body[data-branch-theme="phahol"] .pv-modern-table tfoot td,
+body[data-branch-theme="phahol"] .a4-table tfoot td,
+body[data-branch-theme="phahol"] .sheet-table tfoot td {
+  background: #d9e8ee !important;
+  color: #203f4d !important;
+}
+
+body[data-branch-theme="emsphere"] .pv-modern-table tfoot td,
+body[data-branch-theme="emsphere"] .a4-table tfoot td,
+body[data-branch-theme="emsphere"] .sheet-table tfoot td {
+  background: #f0d2c9 !important;
+  color: #4d2f2b !important;
+}
+
+body[data-branch-theme="phahol"] .a4-header {
+  border-color: #5f8796 !important;
+}
+
+body[data-branch-theme="emsphere"] .a4-header {
+  border-color: #c07680 !important;
+}
+
+@media print {
+  body[data-branch-theme="phahol"] .pv-top-strip,
+  body[data-branch-theme="phahol"] .pv-footer,
+  body[data-branch-theme="phahol"].print-voucher .pv-footer {
+    background: linear-gradient(90deg, #2f6072, #7fa2af) !important;
+    border-color: #294f5e !important;
+    color: #fff !important;
+  }
+
+  body[data-branch-theme="emsphere"] .pv-top-strip,
+  body[data-branch-theme="emsphere"] .pv-footer,
+  body[data-branch-theme="emsphere"].print-voucher .pv-footer {
+    background: linear-gradient(90deg, #874a43, #d08a92) !important;
+    border-color: #713d37 !important;
+    color: #fff !important;
+  }
+
+  body[data-branch-theme="phahol"] .pv-card-heading,
+  body[data-branch-theme="phahol"] .pv-modern-table th,
+  body[data-branch-theme="phahol"] .a4-table th,
+  body[data-branch-theme="phahol"] .sheet-table th {
+    background: #c4d9e1 !important;
+    color: #203f4d !important;
+    border-color: #6f96a4 !important;
+  }
+
+  body[data-branch-theme="emsphere"] .pv-card-heading,
+  body[data-branch-theme="emsphere"] .pv-modern-table th,
+  body[data-branch-theme="emsphere"] .a4-table th,
+  body[data-branch-theme="emsphere"] .sheet-table th {
+    background: #edc8bf !important;
+    color: #4d2f2b !important;
+    border-color: #b67668 !important;
+  }
+
+  body[data-branch-theme="phahol"] .pv-modern-table td,
+  body[data-branch-theme="phahol"] .pv-words-box,
+  body[data-branch-theme="phahol"] .pv-signature-grid,
+  body[data-branch-theme="phahol"] .a4-table td,
+  body[data-branch-theme="phahol"] .sheet-table td {
+    border-color: #7fa2af !important;
+  }
+
+  body[data-branch-theme="emsphere"] .pv-modern-table td,
+  body[data-branch-theme="emsphere"] .pv-words-box,
+  body[data-branch-theme="emsphere"] .pv-signature-grid,
+  body[data-branch-theme="emsphere"] .a4-table td,
+  body[data-branch-theme="emsphere"] .sheet-table td {
+    border-color: #c18477 !important;
+  }
+
+  body[data-branch-theme="phahol"] .pv-modern-table tfoot td,
+  body[data-branch-theme="phahol"] .a4-table tfoot td,
+  body[data-branch-theme="phahol"] .sheet-table tfoot td {
+    background: #d9e8ee !important;
+    color: #203f4d !important;
+  }
+
+  body[data-branch-theme="emsphere"] .pv-modern-table tfoot td,
+  body[data-branch-theme="emsphere"] .a4-table tfoot td,
+  body[data-branch-theme="emsphere"] .sheet-table tfoot td {
+    background: #f0d2c9 !important;
+    color: #4d2f2b !important;
+  }
+}
+
 .document-detail {
   display: grid;
   gap: 16px;
@@ -2444,5 +2603,126 @@ body[data-branch-theme="emsphere"] .sheet-table tfoot td {
   body[data-branch-theme="emsphere"] .a4-table td,
   body[data-branch-theme="emsphere"] .sheet-table td {
     border-color: #c6a299 !important;
+  }
+}
+
+/* Final print palette override: keep document colors vivid after browser/printer color handling. */
+body[data-branch-theme="phahol"] .voucher {
+  --pv-brand: #5f8796;
+  --pv-brand-dark: #2f6072;
+  --pv-line: #6f96a4;
+  --pv-soft: #dceaf0;
+}
+
+body[data-branch-theme="emsphere"] .voucher {
+  --pv-brand: #c07680;
+  --pv-brand-dark: #874a43;
+  --pv-line: #b67668;
+  --pv-soft: #f0d2c9;
+}
+
+body[data-branch-theme="phahol"] .pv-top-strip,
+body[data-branch-theme="phahol"] .pv-footer {
+  background: linear-gradient(90deg, #2f6072, #7fa2af) !important;
+  border-color: #294f5e !important;
+}
+
+body[data-branch-theme="emsphere"] .pv-top-strip,
+body[data-branch-theme="emsphere"] .pv-footer {
+  background: linear-gradient(90deg, #874a43, #d08a92) !important;
+  border-color: #713d37 !important;
+}
+
+body[data-branch-theme="phahol"] .pv-card-heading,
+body[data-branch-theme="phahol"] .pv-modern-table th,
+body[data-branch-theme="phahol"] .a4-table th,
+body[data-branch-theme="phahol"] .sheet-table th {
+  background: #c4d9e1 !important;
+  color: #203f4d !important;
+  border-color: #6f96a4 !important;
+}
+
+body[data-branch-theme="emsphere"] .pv-card-heading,
+body[data-branch-theme="emsphere"] .pv-modern-table th,
+body[data-branch-theme="emsphere"] .a4-table th,
+body[data-branch-theme="emsphere"] .sheet-table th {
+  background: #edc8bf !important;
+  color: #4d2f2b !important;
+  border-color: #b67668 !important;
+}
+
+body[data-branch-theme="phahol"] .pv-info-card,
+body[data-branch-theme="phahol"] .pv-voucher-card,
+body[data-branch-theme="phahol"] .pv-modern-table td,
+body[data-branch-theme="phahol"] .pv-words-box,
+body[data-branch-theme="phahol"] .pv-signature-grid,
+body[data-branch-theme="phahol"] .pv-sign-card,
+body[data-branch-theme="phahol"] .a4-table td,
+body[data-branch-theme="phahol"] .a4-table th,
+body[data-branch-theme="phahol"] .sheet-table td,
+body[data-branch-theme="phahol"] .sheet-table th {
+  border-color: #7fa2af !important;
+}
+
+body[data-branch-theme="emsphere"] .pv-info-card,
+body[data-branch-theme="emsphere"] .pv-voucher-card,
+body[data-branch-theme="emsphere"] .pv-modern-table td,
+body[data-branch-theme="emsphere"] .pv-words-box,
+body[data-branch-theme="emsphere"] .pv-signature-grid,
+body[data-branch-theme="emsphere"] .pv-sign-card,
+body[data-branch-theme="emsphere"] .a4-table td,
+body[data-branch-theme="emsphere"] .a4-table th,
+body[data-branch-theme="emsphere"] .sheet-table td,
+body[data-branch-theme="emsphere"] .sheet-table th {
+  border-color: #c18477 !important;
+}
+
+body[data-branch-theme="phahol"] .pv-modern-table tfoot td,
+body[data-branch-theme="phahol"] .a4-table tfoot td,
+body[data-branch-theme="phahol"] .sheet-table tfoot td {
+  background: #d9e8ee !important;
+  color: #203f4d !important;
+}
+
+body[data-branch-theme="emsphere"] .pv-modern-table tfoot td,
+body[data-branch-theme="emsphere"] .a4-table tfoot td,
+body[data-branch-theme="emsphere"] .sheet-table tfoot td {
+  background: #f0d2c9 !important;
+  color: #4d2f2b !important;
+}
+
+@media print {
+  body[data-branch-theme="phahol"] .pv-top-strip,
+  body[data-branch-theme="phahol"] .pv-footer,
+  body[data-branch-theme="phahol"].print-voucher .pv-footer {
+    background: linear-gradient(90deg, #2f6072, #7fa2af) !important;
+    border-color: #294f5e !important;
+    color: #fff !important;
+  }
+
+  body[data-branch-theme="emsphere"] .pv-top-strip,
+  body[data-branch-theme="emsphere"] .pv-footer,
+  body[data-branch-theme="emsphere"].print-voucher .pv-footer {
+    background: linear-gradient(90deg, #874a43, #d08a92) !important;
+    border-color: #713d37 !important;
+    color: #fff !important;
+  }
+
+  body[data-branch-theme="phahol"] .pv-card-heading,
+  body[data-branch-theme="phahol"] .pv-modern-table th,
+  body[data-branch-theme="phahol"] .a4-table th,
+  body[data-branch-theme="phahol"] .sheet-table th {
+    background: #c4d9e1 !important;
+    color: #203f4d !important;
+    border-color: #6f96a4 !important;
+  }
+
+  body[data-branch-theme="emsphere"] .pv-card-heading,
+  body[data-branch-theme="emsphere"] .pv-modern-table th,
+  body[data-branch-theme="emsphere"] .a4-table th,
+  body[data-branch-theme="emsphere"] .sheet-table th {
+    background: #edc8bf !important;
+    color: #4d2f2b !important;
+    border-color: #b67668 !important;
   }
 }

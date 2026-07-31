@@ -661,7 +661,8 @@ function renderExpenseDetail(record) {
     `;
     body.appendChild(tr);
   });
-  while (body.children.length < 26) {
+  const detailRowTarget = Math.max(12, Math.min(18, body.children.length + 4));
+  while (body.children.length < detailRowTarget) {
     const tr = document.createElement("tr");
     tr.innerHTML = "<td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>";
     body.appendChild(tr);
@@ -711,7 +712,7 @@ function renderMonthlyPettyCash(record) {
   const summaryRow = document.createElement("tr");
   summaryRow.innerHTML = `
     <td></td>
-    <td>เงินสดย่อยหน้าร้านคงเหลือ ณ วันที่ ${monthEndThaiDate} จำนวนเงิน ${formatPlainMoney(remaining)} บาท<br>ยอดที่ต้องเบิก ${formatPlainMoney(reimbursement)} บาท · ชื่อบัญชีผู้เบิก: ${escapeHtml(accountName)} · เลขบัญชี: ${escapeHtml(accountNo)}</td>
+    <td>เงินสดย่อยหน้าร้านคงเหลือ ณ วันที่ ${monthEndThaiDate} จำนวนเงิน ${formatPlainMoney(remaining)} บาท<br>ยอดที่ต้องเบิก ${formatPlainMoney(reimbursement)} บาท · ชื่อบัญชีผู้เบิก: ${escapeHtml(accountName)}<br>เลขบัญชี: ${escapeHtml(accountNo)}</td>
     <td></td>
   `;
   body.appendChild(summaryRow);
