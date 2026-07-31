@@ -705,22 +705,22 @@ function renderMonthlyPettyCash(record) {
     <td style="text-align:right">${formatPlainMoney(reimbursement)}</td>
   `;
   body.appendChild(tr);
+  const accountName = record.reimbursementAccountName || "-";
+  const accountNo = record.reimbursementAccountNo || "-";
   const summaryRow = document.createElement("tr");
   summaryRow.innerHTML = `
     <td></td>
-    <td>เงินสดย่อยหน้าร้านคงเหลือ ณ วันที่ ${monthEndThaiDate} จำนวนเงิน ${formatPlainMoney(remaining)} บาท<br>ขอเบิกเงินสดย่อยประจำเดือน ${reimbursementThaiMonthLabel} จำนวนเงิน ${formatPlainMoney(reimbursement)} บาท</td>
+    <td>เงินสดย่อยหน้าร้านคงเหลือ ณ วันที่ ${monthEndThaiDate} จำนวนเงิน ${formatPlainMoney(remaining)} บาท<br>ยอดที่ต้องเบิก ${formatPlainMoney(reimbursement)} บาท · ชื่อบัญชีผู้เบิก: ${escapeHtml(accountName)} · เลขบัญชี: ${escapeHtml(accountNo)}</td>
     <td></td>
   `;
   body.appendChild(summaryRow);
-  const bankRow = document.createElement("tr");
-  const accountName = record.reimbursementAccountName || "-";
-  const accountNo = record.reimbursementAccountNo || "-";
-  bankRow.innerHTML = `
+  const attachedRow = document.createElement("tr");
+  attachedRow.innerHTML = `
     <td></td>
-    <td>รายการตามใบเบิกเงินสดย่อยแนบ จำนวน ${monthRecords.length} รายการ · รายรับระหว่างเดือน ${formatPlainMoney(incomeTotal)} บาท<br>ชื่อบัญชีผู้เบิก: ${escapeHtml(accountName)} · เลขบัญชี: ${escapeHtml(accountNo)}</td>
+    <td>รายการตามใบเบิกเงินสดย่อยแนบ จำนวน ${monthRecords.length} รายการ · รายรับระหว่างเดือน ${formatPlainMoney(incomeTotal)} บาท</td>
     <td></td>
   `;
-  body.appendChild(bankRow);
+  body.appendChild(attachedRow);
   while (body.children.length < 5) {
     const tr = document.createElement("tr");
     tr.innerHTML = "<td></td><td></td><td></td>";
