@@ -1,5 +1,6 @@
 const storeKey = "michiko-expenses-v2";
 const memoryKey = "michiko-memory-v1";
+const selectedBranchKey = "michiko-selected-branch";
 
 const fields = {
   date: document.getElementById("expenseDate"),
@@ -480,7 +481,8 @@ function saveRecord(recordType = "expense") {
     renderDocumentTemplates(data);
     showToast("บันทึกรายจ่ายแล้ว พร้อมเลขเอกสารถัดไป");
   }
-  documentDetail.hidden = true;
+  documentDetail.hidden = false;
+  documentDetail.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
 function saveExpense() {
@@ -900,6 +902,7 @@ function init() {
   fields.date.addEventListener("change", makeVoucherNo);
   fields.branch.addEventListener("change", () => {
     const profile = branchProfile(fields.branch.value);
+    localStorage.setItem(selectedBranchKey, fields.branch.value);
     applyBranchTheme(fields.branch.value);
     if (pettyCashLimitInput && !localStorage.getItem("michiko-petty-cash-limit")) {
       pettyCashLimitInput.value = String(profile.pettyCashLimit || 4000);
@@ -960,6 +963,11 @@ function init() {
   });
 
   const branchPicker = document.getElementById("branchPicker");
+  const savedBranch = localStorage.getItem(selectedBranchKey);
+  if (savedBranch && [...fields.branch.options].some(option => option.value === savedBranch)) {
+    fields.branch.value = savedBranch;
+    branchPicker.hidden = true;
+  }
   document.getElementById("changeBranch").addEventListener("click", () => {
     branchPicker.hidden = false;
   });
@@ -968,6 +976,7 @@ function init() {
       const profile = branchProfiles.find(item => item.id === button.dataset.branchChoice);
       if (!profile) return;
       fields.branch.value = profile.branch;
+      localStorage.setItem(selectedBranchKey, profile.branch);
       applyBranchTheme(profile.branch);
       makeVoucherNo();
       updateVoucher();
