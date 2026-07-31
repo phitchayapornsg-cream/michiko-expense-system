@@ -636,7 +636,7 @@ function renderExpenseDetail(record) {
   setText("detailDate", currentDocDate);
   setText("detailPaidTo", record.paidTo || "-");
   setText("detailReceiverDate", `Date ${currentDocDate}`);
-  setText("detailApprovedDate", `Date ${currentDocDate}`);
+  setText("detailApprovedDate", "");
   setText("detailBalanceLabel", `Petty Cash Balance as of ${monthLabel}`);
   const body = document.getElementById("detailItems");
   body.innerHTML = "";
@@ -825,8 +825,8 @@ function updateVoucher(data = collectForm()) {
   setText("vReceivedBy", data.paidTo);
   setText("vReceivedDate", `วันที่ ${currentDocDate}`);
   setText("vPreparedDate", `วันที่ ${currentDocDate}`);
-  setText("vCheckedDate", `วันที่ ${currentDocDate}`);
-  setText("vApprovedDate", `วันที่ ${currentDocDate}`);
+  setText("vCheckedDate", "");
+  setText("vApprovedDate", "");
   setText("vTotal", formatPlainMoney(data.total));
   setText("vTotalText", thaiBahtText(data.total));
   document.getElementById("vCheckCash").textContent = data.paymentMethod === "เงินสด" ? "✓" : "";
