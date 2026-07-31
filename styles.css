@@ -1161,6 +1161,12 @@ body.print-detail .detail-date-meta {
   display: none !important;
 }
 
+/* Expense Detail signatures: keep date under the role name and shorten signature lines. */
+.ledger-signatures i {
+  width: 68%;
+  justify-self: center;
+}
+
 /* Cream request: document dates live in the signature area, not the top metadata. */
 .pv-date-line,
 .detail-date-meta {
