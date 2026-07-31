@@ -610,7 +610,7 @@ function renderExpenseDetail(record) {
   let incomeTotal = 0;
   let outTotal = 0;
   setText("detailVoucherNo", `Expense Detail ${monthLabel}`);
-  setText("detailDate", voucherDate(record.date));
+  setText("detailDate", voucherDate(todayISO()));
   setText("detailPaidTo", record.paidTo || "-");
   setText("detailBalanceLabel", `Petty Cash Balance as of ${monthLabel}`);
   const body = document.getElementById("detailItems");
