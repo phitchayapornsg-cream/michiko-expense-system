@@ -300,7 +300,7 @@ function thaiDate(iso) {
 function voucherDate(iso) {
   if (!iso) return "-";
   const [y, m, d] = iso.split("-");
-  return `${Number(d)}/${Number(m)}/${Number(y)}`;
+  return `${String(Number(d)).padStart(2, "0")}/${String(Number(m)).padStart(2, "0")}/${Number(y) + 543}`;
 }
 
 function englishMonthYear(value) {
@@ -868,7 +868,7 @@ function applyDocumentProfile(data = collectForm()) {
 }
 
 function updateVoucher(data = collectForm()) {
-  const currentDocDate = thaiDate(data.date || todayISO());
+  const currentDocDate = voucherDate(data.date || todayISO());
   applyDocumentProfile(data);
   setText("vVoucherNo", voucherNoForBranch(data.voucherNo, data.branch, data.date));
   setText("vDate", currentDocDate);
