@@ -1172,6 +1172,212 @@ body.print-detail .detail-date-meta {
   display: none !important;
 }
 
+/* Absolute final voucher signature and section spacing override. */
+.pv-modern-head {
+  margin-bottom: 10px !important;
+}
+
+.pv-sign-card {
+  justify-content: flex-start !important;
+}
+
+.pv-sign-card .pv-dot-line {
+  width: 82% !important;
+  height: 12px !important;
+  margin: 14px auto 8px !important;
+  border-bottom: 1.5px dotted currentColor !important;
+  opacity: .72 !important;
+}
+
+.pv-sign-card small {
+  display: block !important;
+  width: 100% !important;
+  margin-top: 0 !important;
+  color: #6f5a55 !important;
+  font-size: 11px !important;
+  line-height: 1.25 !important;
+  text-align: center !important;
+  white-space: nowrap !important;
+}
+
+@media print {
+  body.print-voucher .pv-modern-head {
+    margin-bottom: 1.6mm !important;
+  }
+
+  body.print-voucher .pv-signature-grid {
+    height: 24mm !important;
+    min-height: 24mm !important;
+    overflow: visible !important;
+  }
+
+  body.print-voucher .pv-sign-card {
+    height: 24mm !important;
+    min-height: 0 !important;
+    padding: 1.5mm 2.2mm 1.2mm !important;
+    overflow: visible !important;
+  }
+
+  body.print-voucher .pv-dot-line {
+    width: 82% !important;
+    height: 3.8mm !important;
+    margin: 2mm auto .9mm !important;
+    border-bottom: .35mm dotted currentColor !important;
+  }
+
+  body.print-voucher .pv-sign-card small {
+    display: block !important;
+    min-height: 3.4mm !important;
+    color: #3f302d !important;
+    font-size: 6.3pt !important;
+    font-weight: 700 !important;
+    line-height: 1.15 !important;
+    opacity: 1 !important;
+    overflow: visible !important;
+  }
+}
+
+/* Absolute final voucher signature and section spacing override. */
+.pv-modern-head {
+  margin-bottom: 10px !important;
+}
+
+.pv-sign-card {
+  justify-content: flex-start !important;
+}
+
+.pv-sign-card .pv-dot-line {
+  width: 82% !important;
+  height: 12px !important;
+  margin: 14px auto 8px !important;
+  border-bottom: 1.5px dotted currentColor !important;
+  opacity: .72 !important;
+}
+
+.pv-sign-card small {
+  display: block !important;
+  width: 100% !important;
+  margin-top: 0 !important;
+  color: #6f5a55 !important;
+  font-size: 11px !important;
+  line-height: 1.25 !important;
+  text-align: center !important;
+  white-space: nowrap !important;
+}
+
+@media print {
+  body.print-voucher .pv-modern-head {
+    margin-bottom: 1.6mm !important;
+  }
+
+  body.print-voucher .pv-signature-grid {
+    height: 24mm !important;
+    min-height: 24mm !important;
+    overflow: visible !important;
+  }
+
+  body.print-voucher .pv-sign-card {
+    height: 24mm !important;
+    min-height: 0 !important;
+    padding: 1.5mm 2.2mm 1.2mm !important;
+    overflow: visible !important;
+  }
+
+  body.print-voucher .pv-dot-line {
+    width: 82% !important;
+    height: 3.8mm !important;
+    margin: 2mm auto .9mm !important;
+    border-bottom: .35mm dotted currentColor !important;
+  }
+
+  body.print-voucher .pv-sign-card small {
+    display: block !important;
+    min-height: 3.4mm !important;
+    color: #3f302d !important;
+    font-size: 6.3pt !important;
+    font-weight: 700 !important;
+    line-height: 1.15 !important;
+    opacity: 1 !important;
+    overflow: visible !important;
+  }
+}
+
+/* Final voucher signature spacing: separate signature line and date clearly. */
+.pv-sign-card {
+  justify-content: flex-start !important;
+}
+
+.pv-sign-card .pv-dot-line {
+  width: 82% !important;
+  height: 12px !important;
+  margin: 14px auto 8px !important;
+  border-bottom: 1.5px dotted currentColor !important;
+  opacity: .72 !important;
+}
+
+.pv-sign-card small {
+  display: block !important;
+  width: 100% !important;
+  margin-top: 0 !important;
+  color: #6f5a55 !important;
+  font-size: 11px !important;
+  line-height: 1.25 !important;
+  text-align: center !important;
+  white-space: nowrap !important;
+}
+
+@media print {
+  body.print-voucher .pv-signature-grid {
+    height: 24mm !important;
+    min-height: 24mm !important;
+    overflow: visible !important;
+  }
+
+  body.print-voucher .pv-sign-card {
+    height: 24mm !important;
+    min-height: 0 !important;
+    padding: 1.5mm 2.2mm 1.2mm !important;
+    overflow: visible !important;
+  }
+
+  body.print-voucher .pv-dot-line {
+    width: 82% !important;
+    height: 3.8mm !important;
+    margin: 2mm auto .9mm !important;
+    border-bottom: .35mm dotted currentColor !important;
+  }
+
+  body.print-voucher .pv-sign-card small {
+    display: block !important;
+    min-height: 3.4mm !important;
+    color: #3f302d !important;
+    font-size: 6.3pt !important;
+    font-weight: 700 !important;
+    line-height: 1.15 !important;
+    opacity: 1 !important;
+    overflow: visible !important;
+  }
+}
+
+/* Final voucher section spacing: keep the header rule from touching the info cards. */
+.pv-modern-head {
+  margin-bottom: 10px !important;
+}
+
+.pv-info-grid {
+  padding-top: 0 !important;
+}
+
+@media print {
+  body.print-voucher .pv-modern-head {
+    margin-bottom: 1.6mm !important;
+  }
+
+  body.print-voucher .pv-info-grid {
+    padding-top: 0 !important;
+  }
+}
+
 /* Final signature print override: keep voucher signature dates visible. */
 @media print {
   body.print-voucher .pv-signature-grid {
@@ -3026,4 +3232,68 @@ body .detail-date-meta,
 body.print-voucher .pv-date-line,
 body.print-detail .detail-date-meta {
   display: none !important;
+}
+/* Absolute final voucher signature and section spacing override. */
+.pv-modern-head {
+  margin-bottom: 10px !important;
+}
+
+.pv-sign-card {
+  justify-content: flex-start !important;
+}
+
+.pv-sign-card .pv-dot-line {
+  width: 82% !important;
+  height: 12px !important;
+  margin: 14px auto 8px !important;
+  border-bottom: 1.5px dotted currentColor !important;
+  opacity: .72 !important;
+}
+
+.pv-sign-card small {
+  display: block !important;
+  width: 100% !important;
+  margin-top: 0 !important;
+  color: #6f5a55 !important;
+  font-size: 11px !important;
+  line-height: 1.25 !important;
+  text-align: center !important;
+  white-space: nowrap !important;
+}
+
+@media print {
+  body.print-voucher .pv-modern-head {
+    margin-bottom: 1.6mm !important;
+  }
+
+  body.print-voucher .pv-signature-grid {
+    height: 24mm !important;
+    min-height: 24mm !important;
+    overflow: visible !important;
+  }
+
+  body.print-voucher .pv-sign-card {
+    height: 24mm !important;
+    min-height: 0 !important;
+    padding: 1.5mm 2.2mm 1.2mm !important;
+    overflow: visible !important;
+  }
+
+  body.print-voucher .pv-dot-line {
+    width: 82% !important;
+    height: 3.8mm !important;
+    margin: 2mm auto .9mm !important;
+    border-bottom: .35mm dotted currentColor !important;
+  }
+
+  body.print-voucher .pv-sign-card small {
+    display: block !important;
+    min-height: 3.4mm !important;
+    color: #3f302d !important;
+    font-size: 6.3pt !important;
+    font-weight: 700 !important;
+    line-height: 1.15 !important;
+    opacity: 1 !important;
+    overflow: visible !important;
+  }
 }

@@ -868,7 +868,7 @@ function applyDocumentProfile(data = collectForm()) {
 }
 
 function updateVoucher(data = collectForm()) {
-  const currentDocDate = voucherDate(todayISO());
+  const currentDocDate = thaiDate(data.date || todayISO());
   applyDocumentProfile(data);
   setText("vVoucherNo", voucherNoForBranch(data.voucherNo, data.branch, data.date));
   setText("vDate", currentDocDate);
