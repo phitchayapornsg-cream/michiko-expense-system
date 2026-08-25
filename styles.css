@@ -1172,6 +1172,61 @@ body.print-detail .detail-date-meta {
   display: none !important;
 }
 
+/* Final signature print override: keep voucher signature dates visible. */
+@media print {
+  body.print-voucher .pv-signature-grid {
+    height: 22mm !important;
+    min-height: 22mm !important;
+    overflow: visible !important;
+  }
+
+  body.print-voucher .pv-sign-card {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    min-height: 0 !important;
+    height: 22mm !important;
+    padding: 1.4mm 2.2mm .9mm !important;
+    overflow: visible !important;
+  }
+
+  body.print-voucher .pv-sign-card strong {
+    flex: 0 0 auto !important;
+    font-size: 7pt !important;
+    line-height: 1.05 !important;
+  }
+
+  body.print-voucher .pv-sign-card span {
+    flex: 0 0 auto !important;
+    margin-top: .3mm !important;
+    font-size: 5.7pt !important;
+    line-height: 1.05 !important;
+  }
+
+  body.print-voucher .pv-dot-line {
+    flex: 0 0 auto !important;
+    width: calc(100% - 2mm) !important;
+    height: 4mm !important;
+    margin: 1.8mm 1mm .9mm !important;
+  }
+
+  body.print-voucher .pv-sign-card small {
+    display: block !important;
+    flex: 0 0 auto !important;
+    width: 100% !important;
+    min-height: 3.2mm !important;
+    margin: 0 !important;
+    color: #3f302d !important;
+    font-size: 6.2pt !important;
+    font-weight: 700 !important;
+    line-height: 1.15 !important;
+    opacity: 1 !important;
+    overflow: visible !important;
+    white-space: nowrap !important;
+  }
+}
+
 /* Print fit fix: keep Payment Voucher complete at Chrome/Edge scale 100. */
 @page payment-voucher {
   size: A5 landscape;
