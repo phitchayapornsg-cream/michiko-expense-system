@@ -1237,6 +1237,60 @@ body.print-detail .detail-date-meta {
   }
 }
 
+/* Final signer space: leave a real blank area for handwriting signatures. */
+.pv-signature-grid {
+  min-height: 138px !important;
+}
+
+.pv-sign-card {
+  padding-top: 18px !important;
+}
+
+.pv-dot-line {
+  display: flex !important;
+  align-items: flex-end !important;
+  justify-content: center !important;
+  width: 78% !important;
+  min-height: 46px !important;
+  height: 46px !important;
+  margin: 10px auto 7px !important;
+  padding: 0 4px 8px !important;
+  border-bottom: 1.5px dotted currentColor !important;
+  color: #4e3a35 !important;
+  font-size: 12px !important;
+  font-weight: 800 !important;
+  line-height: 1.15 !important;
+  text-align: center !important;
+}
+
+@media print {
+  body.print-voucher .pv-modern-table td {
+    height: 4.1mm !important;
+  }
+
+  body.print-voucher .pv-signature-grid {
+    height: 28mm !important;
+    min-height: 28mm !important;
+    margin-top: 1mm !important;
+  }
+
+  body.print-voucher .pv-sign-card {
+    height: 28mm !important;
+    padding: 1.6mm 2mm 1mm !important;
+  }
+
+  body.print-voucher .pv-dot-line {
+    width: 78% !important;
+    min-height: 9mm !important;
+    height: 9mm !important;
+    margin: 1mm auto .8mm !important;
+    padding: 0 1mm 1.8mm !important;
+    border-bottom: .28mm dotted currentColor !important;
+    font-size: 6.3pt !important;
+    line-height: 1.1 !important;
+  }
+}
+
 /* Keep signature names readable: the dotted line sits below the name, never through it. */
 .pv-dot-line {
   display: flex !important;
@@ -1293,6 +1347,60 @@ body.print-detail .detail-date-meta {
     font-size: 6.2pt !important;
     font-weight: 750 !important;
     line-height: 1.12 !important;
+  }
+}
+
+/* Absolute final signer space: leave room above the line for a handwritten signature. */
+.pv-signature-grid {
+  min-height: 138px !important;
+}
+
+.pv-sign-card {
+  padding-top: 18px !important;
+}
+
+.pv-dot-line {
+  display: flex !important;
+  align-items: flex-end !important;
+  justify-content: center !important;
+  width: 78% !important;
+  min-height: 46px !important;
+  height: 46px !important;
+  margin: 10px auto 7px !important;
+  padding: 0 4px 8px !important;
+  border-bottom: 1.5px dotted currentColor !important;
+  color: #4e3a35 !important;
+  font-size: 12px !important;
+  font-weight: 800 !important;
+  line-height: 1.15 !important;
+  text-align: center !important;
+}
+
+@media print {
+  body.print-voucher .pv-modern-table td {
+    height: 4.1mm !important;
+  }
+
+  body.print-voucher .pv-signature-grid {
+    height: 28mm !important;
+    min-height: 28mm !important;
+    margin-top: 1mm !important;
+  }
+
+  body.print-voucher .pv-sign-card {
+    height: 28mm !important;
+    padding: 1.6mm 2mm 1mm !important;
+  }
+
+  body.print-voucher .pv-dot-line {
+    width: 78% !important;
+    min-height: 9mm !important;
+    height: 9mm !important;
+    margin: 1mm auto .8mm !important;
+    padding: 0 1mm 1.8mm !important;
+    border-bottom: .28mm dotted currentColor !important;
+    font-size: 6.3pt !important;
+    line-height: 1.1 !important;
   }
 }
 
@@ -3354,5 +3462,58 @@ body.print-detail .detail-date-meta {
     line-height: 1.15 !important;
     opacity: 1 !important;
     overflow: visible !important;
+  }
+}
+/* Absolute final signer space: leave room above the line for a handwritten signature. */
+.pv-signature-grid {
+  min-height: 138px !important;
+}
+
+.pv-sign-card {
+  padding-top: 18px !important;
+}
+
+.pv-dot-line {
+  display: flex !important;
+  align-items: flex-end !important;
+  justify-content: center !important;
+  width: 78% !important;
+  min-height: 46px !important;
+  height: 46px !important;
+  margin: 10px auto 7px !important;
+  padding: 0 4px 8px !important;
+  border-bottom: 1.5px dotted currentColor !important;
+  color: #4e3a35 !important;
+  font-size: 12px !important;
+  font-weight: 800 !important;
+  line-height: 1.15 !important;
+  text-align: center !important;
+}
+
+@media print {
+  body.print-voucher .pv-modern-table td {
+    height: 4.1mm !important;
+  }
+
+  body.print-voucher .pv-signature-grid {
+    height: 28mm !important;
+    min-height: 28mm !important;
+    margin-top: 1mm !important;
+  }
+
+  body.print-voucher .pv-sign-card {
+    height: 28mm !important;
+    padding: 1.6mm 2mm 1mm !important;
+  }
+
+  body.print-voucher .pv-dot-line {
+    width: 78% !important;
+    min-height: 9mm !important;
+    height: 9mm !important;
+    margin: 1mm auto .8mm !important;
+    padding: 0 1mm 1.8mm !important;
+    border-bottom: .28mm dotted currentColor !important;
+    font-size: 6.3pt !important;
+    line-height: 1.1 !important;
   }
 }
