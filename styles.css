@@ -1339,12 +1339,13 @@ body.print-detail .detail-date-meta {
   }
 
   body.print-voucher .pv-signature-grid {
-    height: 20mm !important;
+    height: 21mm !important;
     margin: 1mm 6mm 0 !important;
   }
 
   body.print-voucher .pv-sign-card {
-    padding: 1.5mm 2.2mm 1.2mm !important;
+    padding: 1.4mm 2.2mm 1mm !important;
+    overflow: visible !important;
   }
 
   body.print-voucher .pv-sign-card strong {
@@ -1353,12 +1354,21 @@ body.print-detail .detail-date-meta {
 
   body.print-voucher .pv-sign-card span,
   body.print-voucher .pv-sign-card small {
-    font-size: 5.8pt !important;
+    font-size: 6.2pt !important;
+    color: #4f3a35 !important;
+    line-height: 1.15 !important;
+  }
+
+  body.print-voucher .pv-sign-card small {
+    display: block !important;
+    min-height: 3mm !important;
+    white-space: nowrap !important;
+    opacity: 1 !important;
   }
 
   body.print-voucher .pv-dot-line {
-    height: 4.6mm !important;
-    margin: 1.9mm 1mm .7mm !important;
+    height: 4.2mm !important;
+    margin: 1.6mm 1mm .8mm !important;
   }
 
   body.print-voucher .pv-footer {
