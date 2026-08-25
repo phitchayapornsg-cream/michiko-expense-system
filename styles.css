@@ -1172,6 +1172,203 @@ body.print-detail .detail-date-meta {
   display: none !important;
 }
 
+/* Print fit fix: keep Payment Voucher complete at Chrome/Edge scale 100. */
+@page payment-voucher {
+  size: A5 landscape;
+  margin: 4mm;
+}
+
+@media print {
+  body.print-voucher {
+    width: auto !important;
+    min-width: 0 !important;
+    overflow: hidden !important;
+  }
+
+  body.print-voucher .document-detail,
+  body.print-voucher .document-panel,
+  body.print-voucher .document-stage,
+  body.print-voucher #docVoucher {
+    width: 100% !important;
+    max-width: none !important;
+    height: auto !important;
+    overflow: hidden !important;
+  }
+
+  body.print-voucher .voucher {
+    width: 202mm !important;
+    height: 140mm !important;
+    max-width: 202mm !important;
+    max-height: 140mm !important;
+    margin: 0 auto !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+  }
+
+  body.print-voucher .pv-page {
+    width: 202mm !important;
+    height: 140mm !important;
+    max-width: 202mm !important;
+    max-height: 140mm !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+  }
+
+  body.print-voucher .pv-top-strip {
+    height: 3mm !important;
+    flex: 0 0 3mm !important;
+  }
+
+  body.print-voucher .pv-modern-head {
+    grid-template-columns: 1fr 43mm !important;
+    gap: 3mm !important;
+    padding: 2.7mm 6mm 1.6mm !important;
+  }
+
+  body.print-voucher .pv-brand-block {
+    grid-template-columns: 23mm .3mm 1fr !important;
+    gap: 3mm !important;
+  }
+
+  body.print-voucher .pv-logo {
+    width: 18mm !important;
+    height: 14.5mm !important;
+  }
+
+  body.print-voucher .pv-head-divider {
+    height: 16mm !important;
+  }
+
+  body.print-voucher .pv-company {
+    font-size: 6.2pt !important;
+    line-height: 1.12 !important;
+  }
+
+  body.print-voucher .pv-company strong {
+    font-size: 7pt !important;
+  }
+
+  body.print-voucher .pv-title-en {
+    font-size: 10.8pt !important;
+    line-height: 1.05 !important;
+  }
+
+  body.print-voucher .pv-title-th {
+    font-size: 10.6pt !important;
+    line-height: 1.1 !important;
+  }
+
+  body.print-voucher .pv-voucher-card {
+    width: 39mm !important;
+    margin-top: 1.4mm !important;
+    padding: 1.2mm 1.8mm !important;
+  }
+
+  body.print-voucher .pv-card-label {
+    font-size: 6.4pt !important;
+  }
+
+  body.print-voucher .pv-card-value {
+    font-size: 12.4pt !important;
+    margin-top: .5mm !important;
+  }
+
+  body.print-voucher .pv-info-grid {
+    grid-template-columns: 1.35fr .95fr !important;
+    gap: 1.7mm !important;
+    padding: 0 6mm 1.4mm !important;
+  }
+
+  body.print-voucher .pv-info-card {
+    min-height: 13mm !important;
+  }
+
+  body.print-voucher .pv-card-heading {
+    padding: 1mm 2mm !important;
+    font-size: 6.6pt !important;
+  }
+
+  body.print-voucher .pv-card-body {
+    padding: 1.7mm 2mm !important;
+    font-size: 8.2pt !important;
+  }
+
+  body.print-voucher .pv-check-row {
+    min-height: 8.5mm !important;
+    padding: 1.2mm 2mm !important;
+  }
+
+  body.print-voucher .pv-check-row b {
+    font-size: 6.5pt !important;
+  }
+
+  body.print-voucher .pv-check-row small {
+    font-size: 5.6pt !important;
+  }
+
+  body.print-voucher .pv-modern-table {
+    width: calc(100% - 12mm) !important;
+    margin: 0 6mm !important;
+  }
+
+  body.print-voucher .pv-modern-table th {
+    padding: 1.1mm 2.4mm !important;
+    font-size: 7.6pt !important;
+  }
+
+  body.print-voucher .pv-modern-table td {
+    height: 4mm !important;
+    padding: .35mm 2.4mm !important;
+    font-size: 7.8pt !important;
+  }
+
+  body.print-voucher .pv-modern-table tfoot td {
+    height: 5mm !important;
+    font-size: 8pt !important;
+  }
+
+  body.print-voucher .pv-words-box {
+    height: 8mm !important;
+    margin: 0 6mm !important;
+    padding: .8mm 2.4mm !important;
+    font-size: 7.2pt !important;
+  }
+
+  body.print-voucher .pv-words-box strong {
+    font-size: 7.8pt !important;
+  }
+
+  body.print-voucher .pv-signature-grid {
+    height: 20mm !important;
+    margin: 1mm 6mm 0 !important;
+  }
+
+  body.print-voucher .pv-sign-card {
+    padding: 1.5mm 2.2mm 1.2mm !important;
+  }
+
+  body.print-voucher .pv-sign-card strong {
+    font-size: 7pt !important;
+  }
+
+  body.print-voucher .pv-sign-card span,
+  body.print-voucher .pv-sign-card small {
+    font-size: 5.8pt !important;
+  }
+
+  body.print-voucher .pv-dot-line {
+    height: 4.6mm !important;
+    margin: 1.9mm 1mm .7mm !important;
+  }
+
+  body.print-voucher .pv-footer {
+    height: 6mm !important;
+    flex: 0 0 6mm !important;
+    padding: 0 6mm !important;
+    font-size: 6.4pt !important;
+  }
+}
+
 /* Expense Detail signatures: keep date under the signature line and shorten lines. */
 .ledger-signatures i {
   width: 68%;
