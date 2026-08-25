@@ -318,6 +318,17 @@ input:focus, select:focus, textarea:focus { border-color: var(--brand-2); box-sh
 .record { border: 1px solid var(--line); border-radius: 8px; padding: 12px; display: grid; gap: 6px; background: #fff; }
 .record-top { display: flex; justify-content: space-between; gap: 12px; font-weight: 750; }
 .record small { color: var(--muted); }
+.month-filter-field {
+  display: grid;
+  gap: 8px;
+  color: var(--muted);
+  font-weight: 800;
+}
+
+.month-filter-field select {
+  min-height: 44px;
+  cursor: pointer;
+}
 
 /* Application themes. Printable document rules below intentionally stay separate. */
 body[data-branch-theme="phahol"] {

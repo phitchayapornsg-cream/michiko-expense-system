@@ -20,6 +20,7 @@ const fields = {
 const itemWrap = document.getElementById("items");
 const recordList = document.getElementById("recordList");
 const recordCount = document.getElementById("recordCount");
+const monthFilter = document.getElementById("monthFilter");
 const recentList = document.getElementById("recentList");
 const toast = document.getElementById("toast");
 const documentDetail = document.getElementById("documentDetail");
@@ -72,6 +73,7 @@ let records = loadJson(storeKey, []);
 let memory = normalizeMemory(loadJson(memoryKey, null), records);
 let receiptData = "";
 let selectedRecordId = null;
+let selectedMonthKey = todayISO().slice(0, 7);
 let activeDocTab = "voucher";
 let editingRecordId = null;
 let editingRecordType = "expense";
@@ -82,6 +84,10 @@ function getPettyCashLimit() {
 
 function branchProfile(branchName = fields.branch?.value || "") {
   return branchProfiles.find(profile => profile.match && branchName.includes(profile.match)) || branchProfiles[branchProfiles.length - 1];
+}
+
+function sameBranch(a, b) {
+  return branchProfile(a).id === branchProfile(b).id;
 }
 
 function voucherNoForBranch(voucherNo, branchName, dateValue) {
@@ -489,6 +495,7 @@ function saveRecord(recordType = "expense") {
   }
 
   selectedRecordId = data.id;
+  selectedMonthKey = (data.date || todayISO()).slice(0, 7);
   saveJson(storeKey, records);
   rememberValue("paidTo", data.paidTo);
   rememberValue("preparedBy", data.preparedBy);
@@ -519,14 +526,45 @@ function saveExpense() {
 function saveIncome() {
   saveRecord("income");
 }
+
+function recordMonthKey(record) {
+  return (record?.date || todayISO()).slice(0, 7);
+}
+
+function currentBranchRecords() {
+  return records.filter(record => sameBranch(record.branch, fields.branch.value));
+}
+
+function filteredRecords() {
+  return currentBranchRecords()
+    .filter(record => recordMonthKey(record) === selectedMonthKey);
+}
+
+function renderMonthOptions() {
+  if (!monthFilter) return;
+  const currentMonth = todayISO().slice(0, 7);
+  const monthKeys = Array.from(new Set([
+    currentMonth,
+    selectedMonthKey,
+    ...currentBranchRecords().map(recordMonthKey)
+  ].filter(Boolean))).sort().reverse();
+  if (!monthKeys.includes(selectedMonthKey)) selectedMonthKey = monthKeys[0] || currentMonth;
+  monthFilter.innerHTML = monthKeys
+    .map(monthKey => `<option value="${monthKey}">${englishMonthYear(`${monthKey}-01`)}</option>`)
+    .join("");
+  monthFilter.value = selectedMonthKey;
+}
+
 function renderRecords() {
+  renderMonthOptions();
+  const visibleRecords = filteredRecords();
   recordList.innerHTML = "";
-  recordCount.textContent = `${records.length} รายการ`;
-  if (!records.length) {
-    recordList.innerHTML = `<p class="hint">ยังไม่มีรายการที่บันทึก</p>`;
+  recordCount.textContent = `${visibleRecords.length} รายการ · ${englishMonthYear(`${selectedMonthKey}-01`)}`;
+  if (!visibleRecords.length) {
+    recordList.innerHTML = `<p class="hint">ยังไม่มีรายการในเดือนนี้ เลือกเดือนย้อนหลังเพื่อเปิดดูข้อมูลเดิมได้</p>`;
     return;
   }
-  records.forEach(record => {
+  visibleRecords.forEach(record => {
     const el = document.createElement("article");
     el.className = "record";
     el.innerHTML = `
@@ -544,6 +582,10 @@ function renderRecords() {
     openBtn.addEventListener("click", () => openDocumentDetail(record));
     deleteBtn.addEventListener("click", () => {
       records = records.filter(item => item.id !== record.id);
+      if (selectedRecordId === record.id) {
+        selectedRecordId = null;
+        documentDetail.hidden = true;
+      }
       saveJson(storeKey, records);
       renderRecords();
       makeVoucherNo();
@@ -597,6 +639,8 @@ function applyRecordToForm(record) {
 
 function openDocumentDetail(record) {
   selectedRecordId = record.id;
+  selectedMonthKey = recordMonthKey(record);
+  if (monthFilter) monthFilter.value = selectedMonthKey;
   renderDocumentTemplates(record);
   switchDocTab(activeDocTab || "voucher");
   documentDetail.hidden = false;
@@ -605,7 +649,13 @@ function openDocumentDetail(record) {
 }
 
 function selectedRecord() {
-  return records.find(record => record.id === selectedRecordId) || collectForm();
+  const selected = records.find(record => record.id === selectedRecordId);
+  if (selected) return selected;
+  const monthRecord = filteredRecords()[0];
+  if (monthRecord) return monthRecord;
+  const data = collectForm();
+  if (selectedMonthKey) data.date = `${selectedMonthKey}-01`;
+  return data;
 }
 
 function switchDocTab(tab) {
@@ -626,7 +676,7 @@ function renderExpenseDetail(record) {
   const monthLabel = englishMonthYear(record.date || todayISO());
   const monthRecords = records
     .filter(item => (item.date || "").startsWith(monthKey))
-    .filter(item => item.branch === record.branch)
+    .filter(item => sameBranch(item.branch, record.branch))
     .sort((a, b) => voucherSerial(a.voucherNo) - voucherSerial(b.voucherNo) || String(a.date).localeCompare(String(b.date)));
   const pettyCashLimit = getPettyCashLimit();
   let balance = pettyCashLimit;
@@ -684,7 +734,9 @@ function renderMonthlyPettyCash(record) {
   const reimbursementMonthLabel = nextEnglishMonthYear(record.date || todayISO());
   const reimbursementThaiMonthLabel = thaiMonthYear(record.date || todayISO(), 1);
   const monthEndThaiDate = endOfMonthThaiDate(record.date || todayISO());
-  const monthRecords = records.filter(item => (item.date || "").startsWith(monthKey));
+  const monthRecords = records
+    .filter(item => (item.date || "").startsWith(monthKey))
+    .filter(item => sameBranch(item.branch, record.branch));
   const expenseRecords = monthRecords.filter(item => item.recordType !== "income");
   const total = expenseRecords
     .reduce((sum, item) => sum + (Number(item.total) || 0), 0);
@@ -953,13 +1005,25 @@ function init() {
     const profile = branchProfile(fields.branch.value);
     localStorage.setItem(selectedBranchKey, fields.branch.value);
     applyBranchTheme(fields.branch.value);
+    selectedRecordId = null;
+    selectedMonthKey = todayISO().slice(0, 7);
+    documentDetail.hidden = true;
     if (pettyCashLimitInput && !localStorage.getItem("michiko-petty-cash-limit")) {
       pettyCashLimitInput.value = String(profile.pettyCashLimit || 4000);
     }
     makeVoucherNo();
     updateVoucher();
+    renderRecords();
     renderDocumentTemplates(selectedRecord());
   });
+  if (monthFilter) {
+    monthFilter.addEventListener("change", () => {
+      selectedMonthKey = monthFilter.value || todayISO().slice(0, 7);
+      selectedRecordId = null;
+      renderRecords();
+      renderDocumentTemplates(selectedRecord());
+    });
+  }
   Object.values(fields).forEach(field => field.addEventListener("input", () => {
     updateVoucher();
     refreshStars();
@@ -1027,8 +1091,11 @@ function init() {
       fields.branch.value = profile.branch;
       localStorage.setItem(selectedBranchKey, profile.branch);
       applyBranchTheme(profile.branch);
+      selectedRecordId = null;
+      selectedMonthKey = todayISO().slice(0, 7);
       makeVoucherNo();
       updateVoucher();
+      renderRecords();
       renderDocumentTemplates(selectedRecord());
       branchPicker.hidden = true;
     });
