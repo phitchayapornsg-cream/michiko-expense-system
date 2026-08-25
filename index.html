@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Michiko Expense App</title>
-  <link rel="stylesheet" href="styles.css?v=20260731f">
+  <link rel="stylesheet" href="styles.css?v=20260825a">
 </head>
 <body>
   <div class="app">
@@ -152,6 +152,9 @@
             <span class="hint" id="recordCount">0 รายการ</span>
           </div>
           <div class="panel-body">
+            <label class="month-filter-field">เดือนที่ต้องการดู
+              <select id="monthFilter" aria-label="เลือกเดือนที่ต้องการดูย้อนหลัง"></select>
+            </label>
             <div class="records" id="recordList"></div>
           </div>
         </aside>
@@ -379,6 +382,6 @@
       </div>
     </section>
   </div>
-  <script src="app.js?v=20260731o"></script>
+  <script src="app.js?v=20260825a"></script>
 </body>
 </html>
