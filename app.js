@@ -704,7 +704,7 @@ function renderExpenseDetail(record) {
     tr.innerHTML = `
       <td>${voucherDate(entry.date)}</td>
       <td>${escapeHtml(voucherNoForBranch(entry.voucherNo, entry.branch, entry.date))}</td>
-      <td>${escapeHtml(entry.paidTo || "")}</td>
+      <td></td>
       <td>${escapeHtml(descriptions)}</td>
       <td>${escapeHtml(entry.billNo || "")}</td>
       <td style="text-align:right">${isIncome ? formatPlainMoney(amount) : ""}</td>
