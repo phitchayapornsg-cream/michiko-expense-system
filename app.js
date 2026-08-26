@@ -83,7 +83,13 @@ function getPettyCashLimit() {
 }
 
 function branchProfile(branchName = fields.branch?.value || "") {
-  return branchProfiles.find(profile => profile.match && branchName.includes(profile.match)) || branchProfiles[branchProfiles.length - 1];
+  const name = String(branchName || "");
+  const aliases = {
+    phahol: ["พหล", "สาขา 1", "สาขา1", "branch 1", "life partner", "LIFE PARTNER"],
+    thonglor: ["ทองหล่อ"],
+    emsphere: ["เอ็ม", "EmSphere", "emsphere", "EM Tower", "MICHIKO456"]
+  };
+  return branchProfiles.find(profile => (aliases[profile.id] || [profile.match]).some(alias => alias && name.includes(alias))) || branchProfiles[branchProfiles.length - 1];
 }
 
 function sameBranch(a, b) {
@@ -535,6 +541,12 @@ function recordMonthKey(record) {
 
 function currentBranchRecords() {
   return records.filter(record => sameBranch(record.branch, fields.branch.value));
+}
+
+function latestBranchMonthOrCurrent() {
+  const currentMonth = todayISO().slice(0, 7);
+  const branchMonths = Array.from(new Set(currentBranchRecords().map(recordMonthKey).filter(Boolean))).sort().reverse();
+  return branchMonths.includes(currentMonth) ? currentMonth : branchMonths[0] || currentMonth;
 }
 
 function filteredRecords() {
@@ -1039,7 +1051,7 @@ function init() {
     localStorage.setItem(selectedBranchKey, fields.branch.value);
     applyBranchTheme(fields.branch.value);
     selectedRecordId = null;
-    selectedMonthKey = todayISO().slice(0, 7);
+    selectedMonthKey = latestBranchMonthOrCurrent();
     documentDetail.hidden = true;
     if (pettyCashLimitInput && !localStorage.getItem("michiko-petty-cash-limit")) {
       pettyCashLimitInput.value = String(profile.pettyCashLimit || 4000);
@@ -1125,7 +1137,7 @@ function init() {
       localStorage.setItem(selectedBranchKey, profile.branch);
       applyBranchTheme(profile.branch);
       selectedRecordId = null;
-      selectedMonthKey = todayISO().slice(0, 7);
+      selectedMonthKey = latestBranchMonthOrCurrent();
       makeVoucherNo();
       updateVoucher();
       renderRecords();
