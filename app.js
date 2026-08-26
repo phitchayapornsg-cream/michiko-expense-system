@@ -761,7 +761,14 @@ function renderMonthlyPettyCash(record) {
     .filter(item => item.recordType === "income")
     .reduce((sum, item) => sum + (Number(item.total) || 0), 0);
   const limit = getPettyCashLimit();
-  const remaining = limit + incomeTotal - total;
+  const openingBalance = records
+    .filter(item => (item.date || "").slice(0, 7) < monthKey)
+    .filter(item => sameBranch(item.branch, record.branch))
+    .reduce((balance, item) => {
+      const amount = Number(item.total) || 0;
+      return item.recordType === "income" ? balance + amount : balance - amount;
+    }, limit);
+  const remaining = openingBalance + incomeTotal - total;
   const reimbursement = Math.max(0, limit - remaining);
   const overBudgetText = remaining < 0 ? ` (${formatPlainMoney(remaining)})` : "";
   const profile = branchProfile(record.branch);
