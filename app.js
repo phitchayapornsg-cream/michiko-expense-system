@@ -684,7 +684,6 @@ function renderExpenseDetail(record) {
   let outTotal = 0;
   setText("detailVoucherNo", `Expense Detail ${monthLabel}`);
   setText("detailDate", currentDocDate);
-  setText("detailPaidTo", record.paidTo || "-");
   setText("detailReceiverDate", `Date ${currentDocDate}`);
   setText("detailApprovedDate", "วันที่ ............../............../..............");
   setText("detailBalanceLabel", `Petty Cash Balance as of ${monthLabel}`);
