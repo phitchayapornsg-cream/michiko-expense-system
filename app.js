@@ -746,6 +746,8 @@ function renderMonthlyPettyCash(record) {
   const remaining = limit + incomeTotal - total;
   const reimbursement = Math.max(0, limit - remaining);
   const overBudgetText = remaining < 0 ? ` (${formatPlainMoney(remaining)})` : "";
+  const profile = branchProfile(record.branch);
+  setText("monthlyPayToBranch", `จ่ายให้ : ${profile.branch}`);
   setText("monthlyPeriod", reimbursementMonthLabel);
   setText("monthlyLimit", formatPlainMoney(limit));
   setText("monthlyExpenses", `${formatPlainMoney(total)}${overBudgetText}`);
