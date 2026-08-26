@@ -674,12 +674,18 @@ function renderExpenseDetail(record) {
   const currentDocDate = voucherDate(todayISO());
   const monthKey = (record.date || todayISO()).slice(0, 7);
   const monthLabel = englishMonthYear(record.date || todayISO());
+  const openingBalance = records
+    .filter(item => (item.date || "").slice(0, 7) < monthKey)
+    .filter(item => sameBranch(item.branch, record.branch))
+    .reduce((balance, item) => {
+      const amount = Number(item.total) || 0;
+      return item.recordType === "income" ? balance + amount : balance - amount;
+    }, getPettyCashLimit());
   const monthRecords = records
     .filter(item => (item.date || "").startsWith(monthKey))
     .filter(item => sameBranch(item.branch, record.branch))
     .sort((a, b) => voucherSerial(a.voucherNo) - voucherSerial(b.voucherNo) || String(a.date).localeCompare(String(b.date)));
-  const pettyCashLimit = getPettyCashLimit();
-  let balance = pettyCashLimit;
+  let balance = openingBalance;
   let incomeTotal = 0;
   let outTotal = 0;
   setText("detailVoucherNo", `Expense Detail ${monthLabel}`);
@@ -689,6 +695,18 @@ function renderExpenseDetail(record) {
   setText("detailBalanceLabel", `Petty Cash Balance as of ${monthLabel}`);
   const body = document.getElementById("detailItems");
   body.innerHTML = "";
+  const openingRow = document.createElement("tr");
+  openingRow.innerHTML = `
+      <td>${voucherDate(`${monthKey}-01`)}</td>
+      <td></td>
+      <td></td>
+      <td>ยอดยกมา</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td style="text-align:right">${formatPlainMoney(openingBalance)}</td>
+    `;
+  body.appendChild(openingRow);
   monthRecords.forEach(entry => {
     const descriptions = (entry.items || []).map(item => item.desc).filter(Boolean).join(", ") || entry.detail || "-";
     const amount = Number(entry.total) || 0;
@@ -719,7 +737,7 @@ function renderExpenseDetail(record) {
     tr.innerHTML = "<td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>";
     body.appendChild(tr);
   }
-  setText("detailInTotal", formatPlainMoney(pettyCashLimit + incomeTotal));
+  setText("detailInTotal", formatPlainMoney(incomeTotal));
   setText("detailOutTotal", formatPlainMoney(outTotal));
   setText("detailTotal", formatPlainMoney(balance));
 }
