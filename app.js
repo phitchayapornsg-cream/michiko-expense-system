@@ -351,6 +351,7 @@ function makeVoucherNo() {
   const prefix = `${profile.voucherPrefix || "M"}${yy}${mm}`;
   const used = records
     .filter(r => r.branch === fields.branch.value)
+    .filter(r => r.recordType !== "income")
     .map(r => r.voucherNo)
     .filter(no => no && no.startsWith(prefix))
     .map(no => Number(no.slice(prefix.length)))
@@ -443,10 +444,11 @@ function updateTotals() {
 }
 
 function collectForm(recordType = "expense") {
+  const isIncome = recordType === "income";
   return {
     id: window.crypto && crypto.randomUUID ? crypto.randomUUID() : String(Date.now()),
     date: fields.date.value,
-    voucherNo: fields.voucherNo.value,
+    voucherNo: isIncome ? "" : fields.voucherNo.value,
     paidTo: fields.paidTo.value.trim(),
     branch: fields.branch.value,
     category: fields.category.value.trim(),
@@ -486,7 +488,7 @@ function saveRecord(recordType = "expense") {
   const editIndex = records.findIndex(record => record.id === editingRecordId);
   if (editIndex >= 0) {
     data.id = records[editIndex].id;
-    data.voucherNo = records[editIndex].voucherNo;
+    data.voucherNo = data.recordType === "income" ? "" : records[editIndex].voucherNo;
     data.createdAt = records[editIndex].createdAt || data.createdAt;
     data.updatedAt = new Date().toISOString();
     records[editIndex] = data;
@@ -567,9 +569,10 @@ function renderRecords() {
   visibleRecords.forEach(record => {
     const el = document.createElement("article");
     el.className = "record";
+    const recordLabel = record.recordType === "income" ? "รายรับ" : escapeHtml(record.voucherNo || "-");
     el.innerHTML = `
       <div class="record-top">
-        <span>${escapeHtml(record.voucherNo)}${record.recordType === "income" ? " · รายรับ" : ""}</span>
+        <span>${recordLabel}</span>
         <span>${formatMoney(record.total)}</span>
       </div>
       <small>${thaiDate(record.date)} · ${escapeHtml(record.paidTo)} · ${escapeHtml(record.category)}</small>
@@ -644,7 +647,7 @@ function openDocumentDetail(record) {
   renderDocumentTemplates(record);
   switchDocTab(activeDocTab || "voucher");
   documentDetail.hidden = false;
-  documentSubtitle.textContent = `${record.voucherNo || "-"} · ${record.paidTo || "-"}`;
+  documentSubtitle.textContent = `${record.recordType === "income" ? "รายรับ" : record.voucherNo || "-"} · ${record.paidTo || "-"}`;
   documentDetail.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
@@ -684,7 +687,11 @@ function renderExpenseDetail(record) {
   const monthRecords = records
     .filter(item => (item.date || "").startsWith(monthKey))
     .filter(item => sameBranch(item.branch, record.branch))
-    .sort((a, b) => voucherSerial(a.voucherNo) - voucherSerial(b.voucherNo) || String(a.date).localeCompare(String(b.date)));
+    .sort((a, b) => {
+      if (a.recordType === "income" && b.recordType !== "income") return -1;
+      if (a.recordType !== "income" && b.recordType === "income") return 1;
+      return voucherSerial(a.voucherNo) - voucherSerial(b.voucherNo) || String(a.date).localeCompare(String(b.date));
+    });
   let balance = openingBalance;
   let incomeTotal = 0;
   let outTotal = 0;
@@ -721,7 +728,7 @@ function renderExpenseDetail(record) {
     const tr = document.createElement("tr");
     tr.innerHTML = `
       <td>${voucherDate(entry.date)}</td>
-      <td>${escapeHtml(voucherNoForBranch(entry.voucherNo, entry.branch, entry.date))}</td>
+      <td>${isIncome ? "" : escapeHtml(voucherNoForBranch(entry.voucherNo, entry.branch, entry.date))}</td>
       <td></td>
       <td>${escapeHtml(descriptions)}</td>
       <td>${escapeHtml(entry.billNo || "")}</td>
@@ -820,7 +827,7 @@ function openCurrentDocument(tab) {
   renderDocumentTemplates(record);
   switchDocTab(tab);
   documentDetail.hidden = false;
-  documentSubtitle.textContent = `${record.voucherNo || "-"} · ${record.paidTo || "-"}`;
+  documentSubtitle.textContent = `${record.recordType === "income" ? "รายรับ" : record.voucherNo || "-"} · ${record.paidTo || "-"}`;
   documentDetail.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
@@ -960,7 +967,7 @@ function exportCsv() {
   }
   const header = ["Voucher No.","Date","Paid To","Branch","Category","Payment","Bill No.","Detail","Prepared By","Total","Items"];
   const rows = records.map(r => [
-    r.voucherNo, r.date, r.paidTo, r.branch, r.category, r.paymentMethod, r.billNo,
+    r.recordType === "income" ? "" : r.voucherNo, r.date, r.paidTo, r.branch, r.category, r.paymentMethod, r.billNo,
     r.detail, r.preparedBy, r.total,
     (r.items || []).map(i => `${i.desc}: ${i.amount}`).join(" | ")
   ]);
