@@ -79,7 +79,21 @@ let editingRecordId = null;
 let editingRecordType = "expense";
 
 function getPettyCashLimit() {
-  return Math.max(0, Number(pettyCashLimitInput?.value || localStorage.getItem("michiko-petty-cash-limit") || 4000));
+  const profile = branchProfile(fields.branch?.value || "");
+  const saved = localStorage.getItem(`michiko-petty-cash-limit-${profile.id}`);
+  return Math.max(0, Number(pettyCashLimitInput?.value || saved || profile.pettyCashLimit || 4000));
+}
+
+function setPettyCashLimitForBranch(branchName = fields.branch?.value || "") {
+  if (!pettyCashLimitInput) return;
+  const profile = branchProfile(branchName);
+  const saved = localStorage.getItem(`michiko-petty-cash-limit-${profile.id}`);
+  pettyCashLimitInput.value = saved || String(profile.pettyCashLimit || 4000);
+}
+
+function savePettyCashLimitForCurrentBranch() {
+  const profile = branchProfile(fields.branch?.value || "");
+  localStorage.setItem(`michiko-petty-cash-limit-${profile.id}`, String(Math.max(0, Number(pettyCashLimitInput?.value || 0))));
 }
 
 function branchProfile(branchName = fields.branch?.value || "") {
@@ -1034,9 +1048,9 @@ function init() {
   fields.category.value = "ค่าเดินทาง";
 
   if (pettyCashLimitInput) {
-    pettyCashLimitInput.value = localStorage.getItem("michiko-petty-cash-limit") || pettyCashLimitInput.value || "4000";
+    setPettyCashLimitForBranch();
     pettyCashLimitInput.addEventListener("input", () => {
-      localStorage.setItem("michiko-petty-cash-limit", String(getPettyCashLimit()));
+      savePettyCashLimitForCurrentBranch();
       renderDocumentTemplates(selectedRecord());
     });
   }
@@ -1053,9 +1067,7 @@ function init() {
     selectedRecordId = null;
     selectedMonthKey = latestBranchMonthOrCurrent();
     documentDetail.hidden = true;
-    if (pettyCashLimitInput && !localStorage.getItem("michiko-petty-cash-limit")) {
-      pettyCashLimitInput.value = String(profile.pettyCashLimit || 4000);
-    }
+    setPettyCashLimitForBranch(fields.branch.value);
     makeVoucherNo();
     updateVoucher();
     renderRecords();
@@ -1138,6 +1150,7 @@ function init() {
       applyBranchTheme(profile.branch);
       selectedRecordId = null;
       selectedMonthKey = latestBranchMonthOrCurrent();
+      setPettyCashLimitForBranch(profile.branch);
       makeVoucherNo();
       updateVoucher();
       renderRecords();
