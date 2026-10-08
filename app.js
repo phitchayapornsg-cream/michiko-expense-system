@@ -39,7 +39,7 @@ const branchProfiles = [
     taxId: "เลขทะเบียนนิติบุคคล 0105563080152",
     phone: "โทรศัพท์ : 064-165-5562",
     pettyCashLimit: 6000,
-    voucherPrefix: "M"
+    voucherPrefix: "L"
   },
   {
     id: "thonglor",
@@ -372,7 +372,7 @@ function makeVoucherNo() {
   const used = records
     .filter(r => r.branch === fields.branch.value)
     .filter(r => r.recordType !== "income")
-    .map(r => r.voucherNo)
+    .map(r => voucherNoForBranch(r.voucherNo, r.branch, r.date))
     .filter(no => no && no.startsWith(prefix))
     .map(no => Number(no.slice(prefix.length)))
     .filter(Number.isFinite);
