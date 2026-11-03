@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Michiko Expense App</title>
-  <link rel="stylesheet" href="styles.css?v=20260825g">
+  <link rel="stylesheet" href="styles.css?v=20261103a">
 </head>
 <body>
   <div class="app">
@@ -115,18 +115,15 @@
                   <div class="suggest-menu"></div>
                 </div>
               </label>
-              <label class="full">รายละเอียด (Detail)
-                <textarea id="detail" placeholder="รายละเอียดค่าใช้จ่าย"></textarea>
-              </label>
             </div>
 
-            <div>
+            <section class="expense-entry" aria-labelledby="expenseItemsTitle">
               <div class="panel-header inline-header">
-                <h2>รายการค่าใช้จ่าย</h2>
+                <h2 id="expenseItemsTitle">รายการค่าใช้จ่าย</h2>
                 <button class="secondary" type="button" id="addItem">เพิ่มรายการ</button>
               </div>
               <div class="items" id="items"></div>
-            </div>
+            </section>
 
             <div class="total-box">
               <div class="total-row">
@@ -135,6 +132,10 @@
               </div>
               <div class="total-text" id="totalText">ศูนย์บาทถ้วน</div>
             </div>
+
+            <label class="expense-extra">รายละเอียดเพิ่มเติม (ถ้ามี)
+              <textarea id="detail" rows="2" placeholder="รายละเอียดเพิ่มเติม"></textarea>
+            </label>
 
             <label>หมายเหตุ
               <textarea id="note" placeholder="หมายเหตุเพิ่มเติม (ถ้ามี)"></textarea>

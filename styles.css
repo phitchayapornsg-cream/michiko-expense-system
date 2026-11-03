@@ -294,6 +294,31 @@ input:focus, select:focus, textarea:focus { border-color: var(--brand-2); box-sh
 }
 
 .items { display: grid; gap: 10px; }
+@media screen {
+  .expense-entry {
+    border-top: 3px solid var(--brand);
+    padding-top: 16px;
+    min-width: 0;
+  }
+  .expense-entry .inline-header {
+    padding: 0 0 14px;
+    background: transparent;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .expense-entry #expenseItemsTitle { font-size: 22px; color: var(--ink); }
+  .expense-entry .items { gap: 16px; }
+  .expense-entry .item-row > label { color: var(--ink); font-weight: 700; }
+  .expense-entry .item-desc,
+  .expense-entry .item-row input[type="number"] {
+    border: 2px solid var(--brand);
+    background: #fff;
+    color: var(--ink);
+    font-weight: 650;
+  }
+  .expense-extra { font-size: 14px; color: var(--muted); }
+  .expense-extra #detail { min-height: 64px; height: 64px; font-weight: 400; }
+}
 .item-row { display: grid; grid-template-columns: minmax(0, 1fr) 150px 42px; gap: 10px; align-items: end; }
 .item-row .suggest-field { grid-template-columns: minmax(0, 1fr) 42px; }
 .item-row .item-remove { width: 42px; height: 42px; border-radius: 8px; border: 1px solid #f1cece; color: var(--bad); background: #fff8f8; }
