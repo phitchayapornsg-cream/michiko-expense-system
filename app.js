@@ -39,6 +39,7 @@ const branchProfiles = [
     taxId: "เลขทะเบียนนิติบุคคล 0105563080152",
     phone: "โทรศัพท์ : 064-165-5562",
     pettyCashLimit: 6000,
+    initialCashBalance: 5000,
     monthlyLimits: { "2026-08": 5000, "2026-09": 4500, "2026-10": 4500 },
     voucherPrefix: "L"
   },
@@ -103,12 +104,13 @@ function savePettyCashLimitForCurrentBranch() {
 }
 
 function openingCashBalance(branchName, monthKey) {
+  const profile = branchProfile(branchName);
   const branchRecords = records.filter(item => sameBranch(item.branch, branchName));
   const firstMonth = branchRecords.map(item => (item.date || "").slice(0, 7))
     .filter(key => key && key <= monthKey).sort()[0] || monthKey;
   return branchRecords.filter(item => (item.date || "").slice(0, 7) < monthKey)
     .reduce((balance, item) => balance + (item.recordType === "income" ? 1 : -1) * (Number(item.total) || 0),
-      getPettyCashLimit(branchName, firstMonth));
+      profile.initialCashBalance ?? getPettyCashLimit(branchName, firstMonth));
 }
 
 function branchProfile(branchName = fields.branch?.value || "") {
