@@ -24,7 +24,10 @@
       </nav>
       <div class="doc-nav">
         <div class="doc-nav-title">Document Templates</div>
-        <label class="petty-limit-field">Petty Cash Limit
+        <label class="petty-limit-field">ยอดตั้งต้นครั้งแรก (บาท)
+          <input id="initialCashBalance" type="number" step="0.01">
+        </label>
+        <label class="petty-limit-field">Petty Cash Limit <span id="limitMonthLabel"></span>
           <input id="pettyCashLimit" type="number" min="0" step="100" value="4000">
         </label>
         <button type="button" data-open-doc="voucher">Print Payment Voucher</button>
@@ -383,6 +386,6 @@
       </div>
     </section>
   </div>
-  <script src="app.js?v=20261103c"></script>
+  <script src="app.js?v=20261103d"></script>
 </body>
 </html>

@@ -26,6 +26,7 @@ const toast = document.getElementById("toast");
 const documentDetail = document.getElementById("documentDetail");
 const documentSubtitle = document.getElementById("documentSubtitle");
 const pettyCashLimitInput = document.getElementById("pettyCashLimit");
+const initialCashBalanceInput = document.getElementById("initialCashBalance");
 
 const branchProfiles = [
   {
@@ -93,6 +94,8 @@ function getPettyCashLimit(branchName = fields.branch?.value || "", monthKey = s
 function setPettyCashLimitForBranch(branchName = fields.branch?.value || "") {
   if (!pettyCashLimitInput) return;
   pettyCashLimitInput.value = String(getPettyCashLimit(branchName));
+  if (initialCashBalanceInput) initialCashBalanceInput.value = String(getInitialCashBalance(branchName));
+  setText("limitMonthLabel", englishMonthYear(`${selectedMonthKey}-01`));
 }
 
 function savePettyCashLimitForCurrentBranch() {
@@ -103,14 +106,24 @@ function savePettyCashLimitForCurrentBranch() {
   saveJson(key, monthly);
 }
 
-function openingCashBalance(branchName, monthKey) {
+function getInitialCashBalance(branchName) {
   const profile = branchProfile(branchName);
+  const key = `michiko-initial-cash-${profile.id}`;
+  const saved = localStorage.getItem(key);
+  if (saved !== null && Number.isFinite(Number(saved))) return Number(saved);
+  const firstMonth = records.filter(item => sameBranch(item.branch, branchName))
+    .map(item => (item.date || "").slice(0, 7)).filter(Boolean).sort()[0] || selectedMonthKey;
+  // Preserve the existing starting cash once, independently of future budget changes.
+  const initial = profile.initialCashBalance ?? getPettyCashLimit(branchName, firstMonth);
+  localStorage.setItem(key, String(initial));
+  return initial;
+}
+
+function openingCashBalance(branchName, monthKey) {
   const branchRecords = records.filter(item => sameBranch(item.branch, branchName));
-  const firstMonth = branchRecords.map(item => (item.date || "").slice(0, 7))
-    .filter(key => key && key <= monthKey).sort()[0] || monthKey;
   return branchRecords.filter(item => (item.date || "").slice(0, 7) < monthKey)
     .reduce((balance, item) => balance + (item.recordType === "income" ? 1 : -1) * (Number(item.total) || 0),
-      profile.initialCashBalance ?? getPettyCashLimit(branchName, firstMonth));
+      getInitialCashBalance(branchName));
 }
 
 function branchProfile(branchName = fields.branch?.value || "") {
@@ -1060,6 +1073,17 @@ function init() {
       renderDocumentTemplates(selectedRecord());
     });
   }
+
+  initialCashBalanceInput?.addEventListener("change", () => {
+    if (initialCashBalanceInput.value === "" || !initialCashBalanceInput.validity.valid) {
+      setPettyCashLimitForBranch();
+      return;
+    }
+    const profile = branchProfile(fields.branch.value);
+    localStorage.setItem(`michiko-initial-cash-${profile.id}`, initialCashBalanceInput.value);
+    renderDocumentTemplates(selectedRecord());
+    showToast("บันทึกยอดตั้งต้นของสาขาแล้ว");
+  });
 
   document.querySelectorAll(".suggest-field").forEach(wrapper => {
     const isMonthlyAccount = wrapper.dataset.memory.startsWith("reimbursementAccount");
