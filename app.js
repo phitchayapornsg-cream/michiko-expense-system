@@ -39,6 +39,7 @@ const branchProfiles = [
     taxId: "เลขทะเบียนนิติบุคคล 0105563080152",
     phone: "โทรศัพท์ : 064-165-5562",
     pettyCashLimit: 6000,
+    monthlyLimits: { "2026-08": 5000, "2026-09": 4500, "2026-10": 4500 },
     voucherPrefix: "L"
   },
   {
@@ -78,22 +79,36 @@ let activeDocTab = "voucher";
 let editingRecordId = null;
 let editingRecordType = "expense";
 
-function getPettyCashLimit() {
-  const profile = branchProfile(fields.branch?.value || "");
+function getPettyCashLimit(branchName = fields.branch?.value || "", monthKey = selectedMonthKey) {
+  const profile = branchProfile(branchName);
+  const monthly = loadJson(`michiko-petty-cash-monthly-${profile.id}`, {});
+  const limits = { ...profile.monthlyLimits, ...monthly };
+  const effectiveMonth = Object.keys(limits).filter(key => key <= monthKey).sort().pop();
+  if (effectiveMonth) return Math.max(0, Number(limits[effectiveMonth]));
   const saved = localStorage.getItem(`michiko-petty-cash-limit-${profile.id}`);
-  return Math.max(0, Number(pettyCashLimitInput?.value || saved || profile.pettyCashLimit || 4000));
+  return Math.max(0, Number(saved ?? profile.pettyCashLimit ?? 4000));
 }
 
 function setPettyCashLimitForBranch(branchName = fields.branch?.value || "") {
   if (!pettyCashLimitInput) return;
-  const profile = branchProfile(branchName);
-  const saved = localStorage.getItem(`michiko-petty-cash-limit-${profile.id}`);
-  pettyCashLimitInput.value = saved || String(profile.pettyCashLimit || 4000);
+  pettyCashLimitInput.value = String(getPettyCashLimit(branchName));
 }
 
 function savePettyCashLimitForCurrentBranch() {
   const profile = branchProfile(fields.branch?.value || "");
-  localStorage.setItem(`michiko-petty-cash-limit-${profile.id}`, String(Math.max(0, Number(pettyCashLimitInput?.value || 0))));
+  const key = `michiko-petty-cash-monthly-${profile.id}`;
+  const monthly = loadJson(key, {});
+  monthly[selectedMonthKey] = Math.max(0, Number(pettyCashLimitInput?.value || 0));
+  saveJson(key, monthly);
+}
+
+function openingCashBalance(branchName, monthKey) {
+  const branchRecords = records.filter(item => sameBranch(item.branch, branchName));
+  const firstMonth = branchRecords.map(item => (item.date || "").slice(0, 7))
+    .filter(key => key && key <= monthKey).sort()[0] || monthKey;
+  return branchRecords.filter(item => (item.date || "").slice(0, 7) < monthKey)
+    .reduce((balance, item) => balance + (item.recordType === "income" ? 1 : -1) * (Number(item.total) || 0),
+      getPettyCashLimit(branchName, firstMonth));
 }
 
 function branchProfile(branchName = fields.branch?.value || "") {
@@ -670,6 +685,7 @@ function openDocumentDetail(record) {
   selectedRecordId = record.id;
   selectedMonthKey = recordMonthKey(record);
   if (monthFilter) monthFilter.value = selectedMonthKey;
+  setPettyCashLimitForBranch(record.branch);
   renderDocumentTemplates(record);
   switchDocTab(activeDocTab || "voucher");
   documentDetail.hidden = false;
@@ -703,13 +719,7 @@ function renderExpenseDetail(record) {
   const currentDocDate = voucherDate(todayISO());
   const monthKey = (record.date || todayISO()).slice(0, 7);
   const monthLabel = englishMonthYear(record.date || todayISO());
-  const openingBalance = records
-    .filter(item => (item.date || "").slice(0, 7) < monthKey)
-    .filter(item => sameBranch(item.branch, record.branch))
-    .reduce((balance, item) => {
-      const amount = Number(item.total) || 0;
-      return item.recordType === "income" ? balance + amount : balance - amount;
-    }, getPettyCashLimit());
+  const openingBalance = openingCashBalance(record.branch, monthKey);
   const monthRecords = records
     .filter(item => (item.date || "").startsWith(monthKey))
     .filter(item => sameBranch(item.branch, record.branch))
@@ -793,14 +803,8 @@ function renderMonthlyPettyCash(record) {
   const incomeTotal = monthRecords
     .filter(item => item.recordType === "income")
     .reduce((sum, item) => sum + (Number(item.total) || 0), 0);
-  const limit = getPettyCashLimit();
-  const openingBalance = records
-    .filter(item => (item.date || "").slice(0, 7) < monthKey)
-    .filter(item => sameBranch(item.branch, record.branch))
-    .reduce((balance, item) => {
-      const amount = Number(item.total) || 0;
-      return item.recordType === "income" ? balance + amount : balance - amount;
-    }, limit);
+  const limit = getPettyCashLimit(record.branch, monthKey);
+  const openingBalance = openingCashBalance(record.branch, monthKey);
   const remaining = openingBalance + incomeTotal - total;
   const reimbursement = Math.max(0, limit - remaining);
   const overBudgetText = remaining < 0 ? ` (${formatPlainMoney(remaining)})` : "";
@@ -1076,6 +1080,7 @@ function init() {
   if (monthFilter) {
     monthFilter.addEventListener("change", () => {
       selectedMonthKey = monthFilter.value || todayISO().slice(0, 7);
+      setPettyCashLimitForBranch();
       selectedRecordId = null;
       renderRecords();
       renderDocumentTemplates(selectedRecord());
